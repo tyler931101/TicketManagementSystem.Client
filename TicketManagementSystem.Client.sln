@@ -3,6 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.0
 MinimumVisualStudioVersion = 10.0.0
 
+<<<<<<< HEAD
 Project("{FAE04EC0-301F-11D3-9F4F-00C04F79EFBC}") = "TicketManagementSystem.Client", "TicketManagementSystem.Client.csproj", "{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}"
 EndProject
 
@@ -21,3 +22,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
+=======
+Project("{FAE04EC0-301F-11D3-9F4F-00C04F79EFBC}") = "TicketManagementSystem.Client", "TicketManagementSystem.Client\TicketManagementSystem.Client.csproj", "{9A19103F-16F7-4668-BE54-9A1E7A4F7556}"
+EndProject
+>>>>>>> b42c851cbcd08feeaaa3a5016311e37e39db0f12

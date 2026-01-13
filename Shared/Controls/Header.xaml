@@ -28,7 +28,11 @@
         <!-- Logo -->
         <StackPanel Orientation="Horizontal" Grid.Column="0" VerticalAlignment="Center" 
                     Margin="{StaticResource HeaderSideMargin}">
+<<<<<<< HEAD
             <Image Source="/TicketManagementSystem.Client;component/Resources/Images/logo.png"
+=======
+            <Image Source="../Resources/Images/logo.png"
+>>>>>>> b42c851cbcd08feeaaa3a5016311e37e39db0f12
                    Width="40" Height="40" Cursor="Hand" MouseDown="Logo_Click"/>
             <TextBlock Text="Ticket Management System" FontSize="18" 
                        Foreground="White" VerticalAlignment="Center" Margin="10,0"/>
@@ -41,10 +45,14 @@
             <!-- Profile Avatar Button -->
             <Button x:Name="ProfileDropdownButton" 
                     Style="{StaticResource AvatarButtonStyle}"
+<<<<<<< HEAD
                     Click="ProfileDropdownButton_Click">
                 <Image Source="/TicketManagementSystem.Client;component/Resources/Images/avatar.png"
                        Width="30" Height="30"/>
             </Button>
+=======
+                    Click="ProfileDropdownButton_Click"/>
+>>>>>>> b42c851cbcd08feeaaa3a5016311e37e39db0f12
             
             <!-- Dropdown Menu -->
             <Popup x:Name="ProfileDropdownPopup" 
@@ -58,7 +66,11 @@
                         <Button Style="{StaticResource DropdownMenuItemStyle}"
                                 Command="{Binding NavigateProfileCommand}">
                             <StackPanel Orientation="Horizontal">
+<<<<<<< HEAD
                                 <Image Source="/TicketManagementSystem.Client;component/Resources/Images/profile.png"
+=======
+                                <Image Source="../Resources/Images/profile.png"
+>>>>>>> b42c851cbcd08feeaaa3a5016311e37e39db0f12
                                        Width="20" Height="20" Margin="0,0,8,0"/>
                                 <TextBlock Text="Profile" FontSize="14" Foreground="#374151"/>
                             </StackPanel>
@@ -68,7 +80,11 @@
                         <Button Style="{StaticResource DropdownMenuItemStyle}"
                                 Command="{Binding LogoutCommand}">
                             <StackPanel Orientation="Horizontal">
+<<<<<<< HEAD
                                 <Image Source="/TicketManagementSystem.Client;component/Resources/Images/logout.png"
+=======
+                                <Image Source="../Resources/Images/logout.png"
+>>>>>>> b42c851cbcd08feeaaa3a5016311e37e39db0f12
                                        Width="20" Height="20" Margin="0,0,8,0"/>
                                 <TextBlock Text="Logout" FontSize="14" Foreground="#374151"/>
                             </StackPanel>
