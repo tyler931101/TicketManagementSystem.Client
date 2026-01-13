@@ -1,0 +1,51 @@
+<Window x:Class="TicketManagementSystem.Client.Shared.Dialogs.MessageDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Message" 
+        Height="200" 
+        Width="400"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="{StaticResource BackgroundBrush}">
+    
+    <Border Background="{StaticResource CardBrush}" 
+            BorderBrush="#DDD" 
+            BorderThickness="1"
+            Margin="20"
+            Effect="{StaticResource DropShadowEffect}">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <!-- Icon and Message -->
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,20">
+                <TextBlock x:Name="IconText" Text="ℹ️" FontSize="24" Margin="0,0,15,0" VerticalAlignment="Center"/>
+                <TextBlock x:Name="MessageText" Text="Message" FontSize="16" VerticalAlignment="Center" 
+                           Foreground="{StaticResource TextBrush}"/>
+            </StackPanel>
+            
+            <!-- Buttons -->
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="CancelButton" Content="Cancel" 
+                        Background="{StaticResource SecondaryBrush}"
+                        Foreground="White"
+                        BorderThickness="0"
+                        Height="30"
+                        Width="80"
+                        Margin="0,0,10,0"
+                        Click="CancelButton_Click"
+                        Visibility="Collapsed"/>
+                <Button x:Name="OKButton" Content="OK" 
+                        Background="{StaticResource PrimaryBrush}"
+                        Foreground="White"
+                        BorderThickness="0"
+                        Height="30"
+                        Width="80"
+                        Click="OKButton_Click"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

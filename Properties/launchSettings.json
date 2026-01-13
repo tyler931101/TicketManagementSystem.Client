@@ -1,0 +1,9 @@
+{
+    "profiles": {
+        "TicketManagementSystem.Client": {
+            "commandName": "Project",
+            "dotnetRunMessages": true,
+            "launchBrowser": false
+        }
+    }
+}

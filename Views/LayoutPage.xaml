@@ -1,0 +1,105 @@
+<Page x:Class="TicketManagementSystem.Client.Views.LayoutPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:vm="clr-namespace:TicketManagementSystem.Client.ViewModels"
+      xmlns:controls="clr-namespace:TicketManagementSystem.Client.Shared.Controls"
+      Title="Main Layout">
+
+    <Grid Background="{StaticResource BackgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/> <!-- Header -->
+            <RowDefinition Height="*"/>    <!-- Main Content -->
+            <RowDefinition Height="Auto"/> <!-- Bottom Navigation -->
+            <RowDefinition Height="Auto"/> <!-- Footer -->
+        </Grid.RowDefinitions>
+        <!-- Header -->
+        <controls:Header Grid.Row="0"/>
+        
+        <!-- Main Content -->
+        <Frame x:Name="ContentFrame" Grid.Row="1" NavigationUIVisibility="Hidden"/>
+
+        <!-- Bottom Navigation -->
+        <Border Grid.Row="2" 
+                Padding="20,10"
+                Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <!-- Tickets -->
+                <Button Style="{StaticResource BottomNavButtonStyle}"
+                        Command="{Binding NavigateTicketsCommand}">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                        <Image Source="../Resources/PageLinkIcons/ticket.png"
+                            Width="50"
+                            Height="50"
+                            Margin="0,0,0,4"/>
+                    </StackPanel>
+                </Button>
+                
+                <!-- Charts -->
+                <Button Style="{StaticResource BottomNavButtonStyle}"
+                        Command="{Binding NavigateChartsCommand}">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                        <Image Source="../Resources/PageLinkIcons/chart.png"
+                            Width="50"
+                            Height="50"
+                            Margin="0,0,0,4"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Chat -->
+                <Button Style="{StaticResource BottomNavButtonStyle}">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                        <Image Source="../Resources/PageLinkIcons/chat.png"
+                            Width="50"
+                            Height="50"
+                            Margin="0,0,0,4"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Setting -->
+                <Button Style="{StaticResource BottomNavButtonStyle}">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                        <Image Source="../Resources/PageLinkIcons/settings.png"
+                            Width="50"
+                            Height="50"
+                            Margin="0,0,0,4"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Helper -->
+                <Button Style="{StaticResource BottomNavButtonStyle}">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                        <Image Source="../Resources/PageLinkIcons/helper.png"
+                            Width="50"
+                            Height="50"
+                            Margin="0,0,0,4"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Calendar -->
+                <Button Style="{StaticResource BottomNavButtonStyle}">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                        <Image Source="../Resources/PageLinkIcons/calendar.png"
+                            Width="50"
+                            Height="50"
+                            Margin="0,0,0,4"/>
+                    </StackPanel>
+                </Button>
+                
+                <!-- Dashboard (Admin only) -->
+                <Button Style="{StaticResource BottomNavButtonStyle}"
+                        Command="{Binding NavigateDashboardCommand}"
+                        Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                        <Image Source="../Resources/PageLinkIcons/user.png"
+                            Width="50"
+                            Height="50"
+                            Margin="0,0,0,4"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Border>
+        
+        <!-- Footer -->
+        <controls:Footer Grid.Row="3"/>
+    </Grid>
+</Page>
