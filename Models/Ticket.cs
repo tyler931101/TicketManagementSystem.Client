@@ -22,9 +22,10 @@ namespace TicketManagementSystem.Client.Models
         [Required]
         public string Priority { get; set; } = "Low";
 
-        public int? AssignedUserId { get; set; }
+        [Required]
+        public string AssignedTo { get; set; } = string.Empty;
 
-        [ForeignKey(nameof(AssignedUserId))]
+        [ForeignKey(nameof(AssignedTo))]
         public User? AssignedUser { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;

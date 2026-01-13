@@ -141,7 +141,7 @@ namespace TicketManagementSystem.Client.Services
                         DueDate = t.DueDate,
                         CreatedAt = t.CreatedAt,
                         UpdatedAt = t.UpdatedAt,
-                        AssignedUserId = t.AssignedUserId,
+                        AssignedTo = t.AssignedTo,
                         AssignedUser = t.AssignedUser != null ? new User
                         {
                             Id = t.AssignedUser.Id,
@@ -174,7 +174,7 @@ namespace TicketManagementSystem.Client.Services
                         DueDate = t.DueDate,
                         CreatedAt = t.CreatedAt,
                         UpdatedAt = t.UpdatedAt,
-                        AssignedUserId = t.AssignedUserId,
+                        AssignedTo = t.AssignedTo,
                         AssignedUser = t.AssignedUser != null ? new User
                         {
                             Id = t.AssignedUser.Id,
@@ -201,7 +201,7 @@ namespace TicketManagementSystem.Client.Services
                         Description = ticket.Description, 
                         Status = ticket.Status, 
                         DueDate = ticket.DueDate, 
-                        AssignedUserId = ticket.AssignedUserId 
+                        AssignedTo = ticket.AssignedTo, 
                     });
                 return response.IsSuccessStatusCode;
             }
@@ -222,7 +222,7 @@ namespace TicketManagementSystem.Client.Services
                         Description = ticket.Description, 
                         Status = ticket.Status, 
                         DueDate = ticket.DueDate, 
-                        AssignedUserId = ticket.AssignedUserId 
+                        AssignedTo = ticket.AssignedTo, 
                     });
                 return response.IsSuccessStatusCode;
             }
@@ -270,7 +270,7 @@ namespace TicketManagementSystem.Client.Services
         public DateTime DueDate { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-        public int? AssignedUserId { get; set; }
+        public string? AssignedTo { get; set; }
         public UserDto? AssignedUser { get; set; }
     }
 }

@@ -2,8 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Create Ticket"
-        Height="420"
         Width="460"
+        Height="460"
         WindowStartupLocation="CenterOwner"
         Background="{StaticResource BackgroundBrush}"
         ResizeMode="NoResize">
@@ -16,10 +16,15 @@
             <!-- Description -->
             <RowDefinition Height="Auto"/>
             <!-- Due Date -->
-            <RowDefinition Height="*"/>
-            <!-- Spacer -->
             <RowDefinition Height="Auto"/>
-            <!-- Buttons -->
+            <!-- Priority -->
+            <RowDefinition Height="Auto"/>
+            <!-- Assigned User -->
+            <RowDefinition Height="Auto"/>
+            <!-- Spacer (take remaining space so buttons stay visible at bottom) -->
+            <RowDefinition Height="*"/>
+            <!-- Buttons (auto-sized) -->
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <!-- Title -->
@@ -44,20 +49,40 @@
             <DatePicker x:Name="DueDatePicker" Margin="0,5,0,0"/>
         </StackPanel>
 
+        <!-- Priority -->
+        <StackPanel Grid.Row="3" Margin="0,0,0,10">
+            <TextBlock Text="Priority:" FontWeight="Bold"/>
+            <ComboBox x:Name="PriorityComboBox" Margin="0,5,0,0" Height="30" VerticalAlignment="Center">
+                <ComboBoxItem Content="Low" Tag="Low"/>
+                <ComboBoxItem Content="Medium" Tag="Medium" IsSelected="True"/>
+                <ComboBoxItem Content="High" Tag="High"/>
+                <ComboBoxItem Content="Urgent" Tag="Urgent"/>
+            </ComboBox>
+        </StackPanel>
+
+        <!-- Assigned User -->
+        <StackPanel Grid.Row="4" Margin="0,0,0,10">
+            <TextBlock Text="Assigned To:" FontWeight="Bold"/>
+            <ComboBox x:Name="AssignedUserComboBox" Margin="0,5,0,0" Height="30" VerticalAlignment="Center">
+                <ComboBoxItem Content="Unassigned" Tag=""/>
+            </ComboBox>
+        </StackPanel>
+
         <!-- Buttons -->
-        <StackPanel Grid.Row="4"
-            Orientation="Horizontal"
-            HorizontalAlignment="Right"
-            Margin="0,20,0,0">
+        <StackPanel Grid.Row="6"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom">
             <Button x:Name="CreateButton"
-                Content="Create"
-                Foreground="White"
-                Background="{StaticResource PrimaryBrush}"
-                BorderThickness="0"
-                Width="80"
-                Height="30"
-                FontSize="15"
-                Click="Create_Click">
+                    Content="Create"
+                    Foreground="White"
+                    Background="{StaticResource PrimaryBrush}"
+                    BorderThickness="0"
+                    Width="80"
+                    Height="30"
+                    FontSize="15"
+                    Margin="10,0,0,0"
+                    Click="Create_Click">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}" CornerRadius="0">
@@ -68,14 +93,14 @@
             </Button>
 
             <Button Content="Cancel"
-                Foreground="White"
-                Background="{StaticResource PrimaryBrush}"
-                BorderThickness="0"
-                Width="80"
-                Height="30"
-                FontSize="15"
-                Margin="10,0,0,0"
-                Click="Cancel_Click">
+                    Foreground="White"
+                    Background="{StaticResource PrimaryBrush}"
+                    BorderThickness="0"
+                    Width="80"
+                    Height="30"
+                    FontSize="15"
+                    Margin="10,0,0,0"
+                    Click="Cancel_Click">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}" CornerRadius="0">

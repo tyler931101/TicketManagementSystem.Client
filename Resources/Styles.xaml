@@ -150,10 +150,14 @@
 		<Setter Property="BorderThickness" Value="0"/>
 		<Setter Property="HorizontalContentAlignment" Value="Left"/>
 		<Setter Property="Cursor" Value="Hand"/>
+		<Setter Property="Padding" Value="8,6"/>
+		<Setter Property="Margin" Value="0,2"/>
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="Button">
-					<Border Background="{TemplateBinding Background}">
+					<Border Background="{TemplateBinding Background}" 
+                            Padding="{TemplateBinding Padding}"
+                            Margin="{TemplateBinding Margin}">
 						<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center"/>
 					</Border>
 				</ControlTemplate>
