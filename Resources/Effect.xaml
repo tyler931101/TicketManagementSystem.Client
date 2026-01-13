@@ -1,0 +1,28 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ✅ Subtle card shadow -->
+    <DropShadowEffect x:Key="DropShadowEffect"
+                      Color="Black"
+                      BlurRadius="10"
+                      ShadowDepth="4"
+                      Opacity="0.4" />
+
+    <!-- ✅ Strong shadow for dialogs or overlays -->
+    <DropShadowEffect x:Key="DialogShadowEffect"
+                      Color="#222222"
+                      BlurRadius="20"
+                      ShadowDepth="8"
+                      Opacity="0.6" />
+
+    <!-- ✅ Hover shadow for interactive elements -->
+    <DropShadowEffect x:Key="HoverShadowEffect"
+                      Color="#000000"
+                      BlurRadius="15"
+                      ShadowDepth="2"
+                      Opacity="0.5" />
+
+    <!-- ✅ Soft glow (optional aesthetic) -->
+    <BlurEffect x:Key="SoftGlowEffect" Radius="8"/>
+
+</ResourceDictionary>

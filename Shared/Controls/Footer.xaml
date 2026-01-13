@@ -1,0 +1,12 @@
+<UserControl x:Class="TicketManagementSystem.Client.Shared.Controls.Footer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Height="40" Background="{StaticResource PrimaryBrush}">
+    <Grid>
+        <TextBlock Text=" 2025 Ticket Management System. All rights reserved."
+                   Foreground="White"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   FontSize="12"/>
+    </Grid>
+</UserControl>

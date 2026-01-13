@@ -1,0 +1,33 @@
+<Window x:Class="TicketManagementSystem.Client.Shared.Dialogs.LoadingDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Loading" 
+        Height="150" 
+        Width="300"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="{StaticResource BackgroundBrush}">
+    
+    <Border Background="{StaticResource CardBrush}" 
+            BorderBrush="#DDD" 
+            BorderThickness="1"
+            Margin="20"
+            Effect="{StaticResource DropShadowEffect}">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <!-- Loading Icon and Message -->
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,15">
+                <TextBlock Text="⏳" FontSize="24" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                <TextBlock x:Name="MessageText" Text="Loading..." FontSize="16" VerticalAlignment="Center" 
+                           Foreground="{StaticResource TextBrush}"/>
+            </StackPanel>
+            
+            <!-- Progress Bar -->
+            <ProgressBar Grid.Row="1" IsIndeterminate="True" Height="20" Margin="0,10,0,0"/>
+        </Grid>
+    </Border>
+</Window>

@@ -1,0 +1,106 @@
+{
+  "format": 1,
+  "restore": {
+    "E:\\work\\TicketManagementSystem\\TicketManagementSystem.Client\\TicketManagementSystem.Client.csproj": {}
+  },
+  "projects": {
+    "E:\\work\\TicketManagementSystem\\TicketManagementSystem.Client\\TicketManagementSystem.Client.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\work\\TicketManagementSystem\\TicketManagementSystem.Client\\TicketManagementSystem.Client.csproj",
+        "projectName": "TicketManagementSystem.Client",
+        "projectPath": "E:\\work\\TicketManagementSystem\\TicketManagementSystem.Client\\TicketManagementSystem.Client.csproj",
+        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
+        "outputPath": "E:\\work\\TicketManagementSystem\\TicketManagementSystem.Client\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0-windows"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0-windows7.0": {
+            "targetAlias": "net9.0-windows",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net9.0-windows7.0": {
+          "targetAlias": "net9.0-windows",
+          "dependencies": {
+            "CommunityToolkit.Mvvm": {
+              "target": "Package",
+              "version": "[8.3.0, )"
+            },
+            "Microsoft.Xaml.Behaviors.Wpf": {
+              "target": "Package",
+              "version": "[1.1.77, )"
+            },
+            "OpenTK.GLWpfControl": {
+              "target": "Package",
+              "version": "[4.3.3, )"
+            },
+            "OxyPlot.Core": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
+            "OxyPlot.Wpf": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
+            "System.ComponentModel.Annotations": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "System.Net.Http.Json": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "System.Text.Json": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App.WPF": {
+              "privateAssets": "none"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.110/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
