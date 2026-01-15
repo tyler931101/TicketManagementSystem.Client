@@ -1,20 +1,18 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using TicketManagementSystem.Client.Models;
 using TicketManagementSystem.Client.Services;
-using TicketManagementSystem.Client.Views;
-using TicketManagementSystem.Client.Shared.Controls;
 using TicketManagementSystem.Client.Shared.Dialogs;
+using TicketManagementSystem.Client.DTOs.Tickets;
 
 namespace TicketManagementSystem.Client.ViewModels
 {
     public partial class TicketManagementViewModel : ObservableObject
     {
-        private readonly ApiService _apiService = new();
+        private readonly TicketService _ticketService = new();
+        private readonly UserService _userService = new();
 
         [ObservableProperty]
         private ObservableCollection<Ticket> _tickets = new();
@@ -39,11 +37,25 @@ namespace TicketManagementSystem.Client.ViewModels
                 var currentUser = AuthenticationService.CurrentUser;
                 if (currentUser != null)
                 {
-                    var tickets = await _apiService.GetUserTicketsAsync(currentUser.Username);
+                    var response = await _ticketService.GetUserTicketsAsync(currentUser.Username);
                     Tickets.Clear();
-                    foreach (var ticket in tickets)
+                    if (response != null && response.Success && response.Data != null)
                     {
-                        Tickets.Add(ticket);
+                        foreach (var ticketDto in response.Data)
+                        {
+                            Tickets.Add(new Ticket
+                            {
+                                Id = Guid.Parse(ticketDto.Id),
+                                Title = ticketDto.Title,
+                                Description = ticketDto.Description,
+                                Status = ticketDto.Status,
+                                DueDate = ticketDto.DueDate,
+                                Priority = ticketDto.Priority,
+                                AssignedTo = ticketDto.AssignedUserId,
+                                CreatedAt = ticketDto.CreatedAt,
+                                UpdatedAt = ticketDto.UpdatedAt
+                            });
+                        }
                     }
                 }
             }
@@ -73,8 +85,16 @@ namespace TicketManagementSystem.Client.ViewModels
                     var createdTicket = dialog.CreatedOrUpdatedTicket;
                     if (createdTicket != null)
                     {
-                        var success = await _apiService.CreateTicketAsync(createdTicket);
-                        if (success)
+                        var createTicketDto = new CreateTicketDto
+                        {
+                            Title = createdTicket.Title,
+                            Description = createdTicket.Description,
+                            DueDate = createdTicket.DueDate,
+                            Priority = createdTicket.Priority,
+                            AssignedUserId = createdTicket.AssignedTo
+                        };
+                        var response = await _ticketService.CreateTicketAsync(createTicketDto);
+                        if (response != null && response.Success)
                         {
                             MessageBox.Show("Ticket created successfully!", "Success", 
                                 MessageBoxButton.OK, MessageBoxImage.Information);
@@ -107,8 +127,17 @@ namespace TicketManagementSystem.Client.ViewModels
             IsLoading = true;
             try
             {
-                var success = await _apiService.UpdateTicketAsync(SelectedTicket);
-                if (success)
+                var updateTicketDto = new UpdateTicketDto
+                {
+                    Title = SelectedTicket.Title,
+                    Description = SelectedTicket.Description,
+                    Status = SelectedTicket.Status,
+                    DueDate = SelectedTicket.DueDate,
+                    Priority = SelectedTicket.Priority,
+                    AssignedUserId = SelectedTicket.AssignedTo
+                };
+                var response = await _ticketService.UpdateTicketAsync(SelectedTicket.Id.ToString(), updateTicketDto);
+                if (response != null && response.Success)
                 {
                     MessageBox.Show("Ticket updated successfully!", "Success", 
                         MessageBoxButton.OK, MessageBoxImage.Information);

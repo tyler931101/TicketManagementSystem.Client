@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Text.RegularExpressions;
 using TicketManagementSystem.Client.Services;
 using TicketManagementSystem.Client.Views;
+using TicketManagementSystem.Client.DTOs.Auth;
 
 namespace TicketManagementSystem.Client.ViewModels
 {
@@ -15,7 +16,7 @@ namespace TicketManagementSystem.Client.ViewModels
         [ObservableProperty] private string _password = string.Empty;
         [ObservableProperty] private bool _isLoading = false;
 
-        private readonly ApiService _apiService = new();
+        private readonly AuthService _authService = new();
 
         private bool IsValidEmail(string email)
         {
@@ -55,9 +56,9 @@ namespace TicketManagementSystem.Client.ViewModels
 
             try
             {
-                var success = await _apiService.LoginAsync(Email, Password);
+                var response = await _authService.LoginAsync(new LoginRequest { Email = Email, Password = Password });
 
-                if (!success)
+                if (response == null || !response.Success)
                 {
                     MessageBox.Show("Invalid email or password.", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;

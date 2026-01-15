@@ -6,24 +6,27 @@ namespace TicketManagementSystem.Client.Models
     public class Ticket
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
+        [StringLength(100, MinimumLength = 3)]
         public string Title { get; set; } = string.Empty;
 
+        [StringLength(500)]
         public string Description { get; set; } = string.Empty;
 
         [Required]
+        [StringLength(20)]
         public string Status { get; set; } = "ToDo";
 
         [Required]
         public DateTime DueDate { get; set; }
 
         [Required]
-        public string Priority { get; set; } = "Low";
+        [StringLength(20)]
+        public string Priority { get; set; } = "Medium";
 
-        [Required]
-        public string AssignedTo { get; set; } = string.Empty;
+        public string? AssignedTo { get; set; }
 
         [ForeignKey(nameof(AssignedTo))]
         public User? AssignedUser { get; set; }

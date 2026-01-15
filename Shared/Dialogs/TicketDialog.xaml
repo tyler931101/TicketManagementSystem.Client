@@ -41,6 +41,7 @@
                      AcceptsReturn="True"
                      Height="80"
                      TextWrapping="Wrap"/>
+            <!-- Added event handler -->
         </StackPanel>
 
         <!-- Due Date -->
@@ -64,7 +65,7 @@
         <StackPanel Grid.Row="4" Margin="0,0,0,10">
             <TextBlock Text="Assigned To:" FontWeight="Bold"/>
             <ComboBox x:Name="AssignedUserComboBox" Margin="0,5,0,0" Height="30" VerticalAlignment="Center">
-                <ComboBoxItem Content="Unassigned" Tag=""/>
+                <ComboBoxItem Content="Unassigned" Tag="{x:Null}"/>
             </ComboBox>
         </StackPanel>
 

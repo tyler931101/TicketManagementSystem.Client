@@ -1,0 +1,24 @@
+﻿<Page x:Class="TicketManagementSystem.Client.Views.SettingPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Chat">
+
+    <Grid Background="{StaticResource BackgroundBrush}">
+        <!-- Main Content -->
+        <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Border Background="{StaticResource CardBrush}"
+                    Padding="40"
+                    Effect="{StaticResource DropShadowEffect}">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="👤" FontSize="60" Margin="0,0,0,20" 
+                               Foreground="{StaticResource PrimaryBrush}"/>
+                    <TextBlock Text="SettingPage" FontSize="24" FontWeight="Bold" 
+                               HorizontalAlignment="Center" Margin="0,0,0,10"
+                               Foreground="{StaticResource TextBrush}"/>
+                    <TextBlock Text="Setting features coming soon!" FontSize="16" 
+                               HorizontalAlignment="Center" Foreground="{StaticResource TextBrush}"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</Page>

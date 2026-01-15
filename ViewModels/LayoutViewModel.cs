@@ -76,8 +76,28 @@ namespace TicketManagementSystem.Client.ViewModels
             _frame.Navigate(new ChartPage());
 
         [RelayCommand]
+        private void NavigateChat() =>
+            _frame.Navigate(new ChatPage());
+
+        [RelayCommand]
+        private void NavigateSetting() =>
+            _frame.Navigate(new SettingPage());
+
+        [RelayCommand]
+        private void NavigateCalendar() =>
+            _frame.Navigate(new CalendarPage());
+
+        [RelayCommand]
+        private void NavigateHelper() =>
+            _frame.Navigate(new HelperPage());
+
+        [RelayCommand]
         private void NavigateProfile() =>
             _frame.Navigate(new ProfilePage());
+
+        [RelayCommand]
+        private void NavigateVideo() =>
+            _frame.Navigate(new VideoPage());
 
         [RelayCommand]
         private void NavigateDashboard()

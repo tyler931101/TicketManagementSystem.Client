@@ -41,7 +41,7 @@ namespace TicketManagementSystem.Client.Shared.Dialogs
                 this.Loaded += (s, e) =>
                 {
                     var selectedUser = AssignedUserComboBox.Items.Cast<ComboBoxItem>()
-                        .FirstOrDefault(item => item.Tag?.ToString() == ticket.AssignedTo);
+                        .FirstOrDefault(item => item.Tag?.ToString() == ticket.AssignedTo?.ToString());
                     if (selectedUser != null)
                         AssignedUserComboBox.SelectedItem = selectedUser;
                 };
@@ -62,24 +62,25 @@ namespace TicketManagementSystem.Client.Shared.Dialogs
         {
             try
             {
-                var apiService = new ApiService();
-                var users = await apiService.GetUsersAsync();
+                var userService = new UserService();
+                var response = await userService.GetUsersAsync();
                 
                 // Clear existing items except "Unassigned"
-                var unassignedItem = AssignedUserComboBox.Items.Cast<ComboBoxItem>().FirstOrDefault();
                 AssignedUserComboBox.Items.Clear();
-                if (unassignedItem != null)
-                    AssignedUserComboBox.Items.Add(unassignedItem);
+                AssignedUserComboBox.Items.Add(new ComboBoxItem { Content = "Unassigned", Tag = null });
                 
-                // Add users to ComboBox
-                foreach (var user in users)
+                // Add users to ComboBox if API call was successful
+                if (response != null && response.Success && response.Data != null)
                 {
-                    var item = new ComboBoxItem
+                    foreach (var user in response.Data)
                     {
-                        Content = user.Username,
-                        Tag = user.Username
-                    };
-                    AssignedUserComboBox.Items.Add(item);
+                        var item = new ComboBoxItem
+                        {
+                            Content = user.Username,
+                            Tag = user.Id
+                        };
+                        AssignedUserComboBox.Items.Add(item);
+                    }
                 }
             }
             catch
@@ -109,7 +110,10 @@ namespace TicketManagementSystem.Client.Shared.Dialogs
                 existing.Priority = selectedPriority?.Tag?.ToString() ?? "Medium";
                 
                 var selectedUser = AssignedUserComboBox.SelectedItem as ComboBoxItem;
-                existing.AssignedTo = selectedUser?.Tag?.ToString() ?? "";
+                if (selectedUser?.Tag is string userId)
+                    existing.AssignedTo = userId;
+                else
+                    existing.AssignedTo = null;
 
                 CreatedOrUpdatedTicket = existing;
             }
@@ -118,6 +122,11 @@ namespace TicketManagementSystem.Client.Shared.Dialogs
                 // Create new ticket
                 var selectedPriority = PriorityComboBox.SelectedItem as ComboBoxItem;
                 var selectedUser = AssignedUserComboBox.SelectedItem as ComboBoxItem;
+                
+                string? assignedUserId = null;
+                if (selectedUser?.Tag is string userId)
+                    assignedUserId = userId;
+                
                 CreatedOrUpdatedTicket = new Ticket
                 {
                     Title = TitleBox.Text,
@@ -125,7 +134,7 @@ namespace TicketManagementSystem.Client.Shared.Dialogs
                     DueDate = DueDatePicker.SelectedDate ?? DateTime.Now,
                     Status = "To Do",
                     Priority = selectedPriority?.Tag?.ToString() ?? "Medium",
-                    AssignedTo = selectedUser?.Tag?.ToString() ?? "",
+                    AssignedTo = assignedUserId,
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now
                 };

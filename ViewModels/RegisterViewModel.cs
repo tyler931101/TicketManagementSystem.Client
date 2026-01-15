@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Text.RegularExpressions;
 using TicketManagementSystem.Client.Services;
 using TicketManagementSystem.Client.Views;
+using TicketManagementSystem.Client.DTOs.Auth;
 
 namespace TicketManagementSystem.Client.ViewModels
 {
@@ -16,7 +17,7 @@ namespace TicketManagementSystem.Client.ViewModels
         [ObservableProperty] private string _password = string.Empty;
         [ObservableProperty] private bool _isLoading = false;
 
-        private readonly ApiService _apiService = new();
+        private readonly AuthService _authService = new();
 
         private bool IsValidEmail(string email)
         {
@@ -56,9 +57,9 @@ namespace TicketManagementSystem.Client.ViewModels
 
             try
             {
-                var success = await _apiService.RegisterAsync(Username, Password, Email);
+                var response = await _authService.RegisterAsync(new RegisterRequest { Username = Username, Password = Password, Email = Email });
 
-                if (success)
+                if (response != null && response.Success)
                 {
                     MessageBox.Show("Registration successful! Please login.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                     
@@ -76,7 +77,11 @@ namespace TicketManagementSystem.Client.ViewModels
                 else
                 {
                     // Show actual server error message
-                    var errorMessage = await _apiService.GetRegistrationErrorAsync(Username, Password, Email);
+                    var errorMessage = response?.Message ?? "Registration failed. Please try again.";
+                    if (response?.Errors != null && response.Errors.Count > 0)
+                    {
+                        errorMessage = string.Join("\n", response.Errors);
+                    }
                     MessageBox.Show(errorMessage, "Registration Failed", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
