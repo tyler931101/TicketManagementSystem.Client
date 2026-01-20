@@ -4,115 +4,348 @@
       xmlns:vm="clr-namespace:TicketManagementSystem.Client.ViewModels"
       Title="Ticket Management">
 
+    <Page.Resources>
+        <!-- Ticket Border Style with Blue Color Range -->
+        <Style x:Key="TicketBorderStyle" TargetType="Border">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#E1E4E8"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="0,0,0,12"/>
+            <Setter Property="Padding" Value="16,14,16,14"/>
+            <Setter Property="MinHeight" Value="200"/>
+            <Setter Property="Effect" Value="{StaticResource DropShadowEffect}"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Status}" Value="To Do">
+                    <Setter Property="BorderBrush" Value="#94A3B8"/>
+                    <Setter Property="BorderThickness" Value="4,1,1,1"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Status}" Value="In Progress">
+                    <Setter Property="BorderBrush" Value="#3B82F6"/>
+                    <Setter Property="BorderThickness" Value="4,1,1,1"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Status}" Value="Testing">
+                    <Setter Property="BorderBrush" Value="#06B6D4"/>
+                    <Setter Property="BorderThickness" Value="4,1,1,1"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Status}" Value="Resolved">
+                    <Setter Property="BorderBrush" Value="#0EA5E9"/>
+                    <Setter Property="BorderThickness" Value="4,1,1,1"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Status}" Value="Closed">
+                    <Setter Property="BorderBrush" Value="#1E40AF"/>
+                    <Setter Property="BorderThickness" Value="4,1,1,1"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
+    
     <Grid Background="{StaticResource BackgroundBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="150"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <!-- Header -->
-        <Border Grid.Row="0" Background="{StaticResource CardBrush}" Padding="20" Margin="10">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="🎫" FontSize="30" Margin="0,0,15,0" VerticalAlignment="Center" 
-                           Foreground="{StaticResource PrimaryBrush}"/>
-                <TextBlock Text="Ticket Management" FontSize="24" FontWeight="Bold" 
-                           VerticalAlignment="Center" Foreground="{StaticResource TextBrush}"/>
-                <Button Content="Add" Command="{Binding AddTicketCommand}" 
-                        Foreground="White"
-                        Background="{StaticResource PrimaryBrush}"
-                        BorderThickness="0"
-                        Width="80"
-                        Height="30"
-                        FontSize="15"
-                        Margin="10,0,0,0">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border Background="{TemplateBinding Background}" CornerRadius="0">
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-            </StackPanel>
+        <Border Grid.Row="0" Style="{StaticResource GlobalHeaderStyle}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <!-- Title Row -->
+                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+                    <Image Source="../Resources/PageLinkIcons/ticket.png"
+                            Style="{StaticResource GlobalHeaderIconStyle}"/>
+                    <TextBlock Text="Ticket Management" Style="{StaticResource GlobalHeaderTitleStyle}"/>
+                </StackPanel>
+
+                <!-- Search and Filter Row with Add Button -->
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <!-- Search and Filter Controls -->
+                    <StackPanel Grid.Column="0" Orientation="Horizontal">
+                        <TextBlock Text="Search:" Style="{StaticResource GlobalHeaderLabelStyle}" Width="60"/>
+                        <TextBox x:Name="SearchBox" Style="{StaticResource GlobalHeaderTextBoxStyle}"
+                                Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" 
+                                TextChanged="SearchBox_TextChanged"/>
+                        
+                        <TextBlock Text="Assigned User:" Style="{StaticResource GlobalHeaderLabelStyle}" Width="90"/>
+                        <ComboBox x:Name="AssignedUserFilter" Style="{StaticResource GlobalHeaderComboBoxStyle}"
+                                ItemsSource="{Binding AssignedUsers}" 
+                                SelectedItem="{Binding SelectedAssignedUser}"
+                                SelectionChanged="AssignedUserFilter_SelectionChanged"/>
+                        
+                        <Button Content="Clear Filters" Command="{Binding ClearFiltersCommand}" 
+                                Style="{StaticResource GlobalHeaderButtonStyle}"
+                                Width="100" Height="30" Margin="10,0,0,0"/>
+                    </StackPanel>
+                    
+                    <!-- Add Button in Right Corner -->
+                    <Button Grid.Column="1" Content="Add" Command="{Binding AddTicketCommand}" 
+                            Style="{StaticResource GlobalHeaderButtonStyle}"
+                            Width="80" Height="30" VerticalAlignment="Top"/>
+                </Grid>
+            </Grid>
         </Border>
 
         <!-- Main Content -->
-        <Grid Grid.Row="1" Margin="10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="300"/>
-            </Grid.ColumnDefinitions>
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <ScrollViewer.Resources>
+                <Style TargetType="ScrollBar" BasedOn="{StaticResource ModernScrollBarStyle}"/>
+            </ScrollViewer.Resources>
+            <!-- Kanban Board -->
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                        
+                <!-- Status Headers -->
+                <Border Grid.Column="0" Background="{StaticResource CardBrush}" BorderBrush="#DDD" BorderThickness="1" Margin="0,0,5,0" Padding="15,12,15,12">
+                    <TextBlock Text="To Do" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Center" Foreground="#2C3E50" TextOptions.TextFormattingMode="Display"/>
+                </Border>
+                <Border Grid.Column="1" Background="{StaticResource CardBrush}" BorderBrush="#DDD" BorderThickness="1" Margin="5,0,5,0" Padding="15,12,15,12">
+                    <TextBlock Text="In Progress" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Center" Foreground="#2C3E50" TextOptions.TextFormattingMode="Display"/>
+                </Border>
+                <Border Grid.Column="2" Background="{StaticResource CardBrush}" BorderBrush="#DDD" BorderThickness="1" Margin="5,0,5,0" Padding="15,12,15,12">
+                    <TextBlock Text="Testing" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Center" Foreground="#2C3E50" TextOptions.TextFormattingMode="Display"/>
+                </Border>
+                <Border Grid.Column="3" Background="{StaticResource CardBrush}" BorderBrush="#DDD" BorderThickness="1" Margin="5,0,5,0" Padding="15,12,15,12">
+                    <TextBlock Text="Resolved" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Center" Foreground="#2C3E50" TextOptions.TextFormattingMode="Display"/>
+                </Border>
+                <Border Grid.Column="4" Background="{StaticResource CardBrush}" BorderBrush="#DDD" BorderThickness="1" Margin="5,0,0,0" Padding="15,12,15,12">
+                    <TextBlock Text="Closed" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Center" Foreground="#2C3E50" TextOptions.TextFormattingMode="Display"/>
+                </Border>
+                
+                <!-- Ticket Lists -->
+                <ItemsControl Grid.Column="0" ItemsSource="{Binding TodoTickets}" AllowDrop="True" Drop="Todo_Drop" DragEnter="Todo_DragEnter" DragLeave="Todo_DragLeave" Margin="15,35,15,0" MinHeight="200" Background="Transparent">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource TicketBorderStyle}"
+                                    MouseLeftButtonDown="Ticket_MouseLeftButtonDown" Tag="{Binding}">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Title}" FontWeight="SemiBold" FontSize="14" TextWrapping="Wrap" Foreground="#1A202C" LineHeight="20" Margin="0,0,0,8"/>
+                                    <TextBlock Text="{Binding Description}" FontSize="12" TextWrapping="Wrap" Foreground="#4A5568" LineHeight="18" Margin="0,0,0,10" MinHeight="100" MaxHeight="100" TextTrimming="WordEllipsis"/>
+                                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                        <TextBlock Text="📅" FontSize="12" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                        <TextBlock Text="{Binding DueDate, StringFormat='yyyy-MM-dd'}" FontSize="11" Foreground="#718096" VerticalAlignment="Center"/>
+                                        <TextBlock Text="  " Width="20"/> <!-- Spacer -->
+                                        <TextBlock Text="👤" FontSize="12" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                        <TextBlock Text="{Binding AssignedUser.Username, FallbackValue='Unassigned'}" FontSize="11" Foreground="#718096" VerticalAlignment="Center"/>
+                                        <TextBlock Text="  " Width="20"/> <!-- Spacer -->
+                                        <Button Content="✏️" FontSize="12" Background="Transparent" BorderThickness="0" Padding="4" 
+                                                Cursor="Hand" VerticalAlignment="Center" HorizontalAlignment="Right"
+                                                Click="EditTicket_Click" Tag="{Binding}" Margin="0,0,4,0">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border Background="{TemplateBinding Background}" CornerRadius="2">
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                        <Button Content="🗑️" FontSize="12" Background="Transparent" BorderThickness="0" Padding="4" 
+                                                Cursor="Hand" VerticalAlignment="Center" HorizontalAlignment="Right"
+                                                Click="DeleteTicket_Click" Tag="{Binding}">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border Background="{TemplateBinding Background}" CornerRadius="2">
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
 
-            <!-- Tickets List -->
-            <Border Grid.Column="0" Background="{StaticResource CardBrush}" 
-                    BorderBrush="#DDD" BorderThickness="1"
-                    Padding="20" Margin="0,0,10,0">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
+                <ItemsControl Grid.Column="1" ItemsSource="{Binding InProgressTickets}" AllowDrop="True" Drop="InProgress_Drop" DragEnter="InProgress_DragEnter" DragLeave="InProgress_DragLeave" Margin="15,35,15,0" MinHeight="200" Background="Transparent">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource TicketBorderStyle}"
+                                    MouseLeftButtonDown="Ticket_MouseLeftButtonDown" Tag="{Binding}">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Title}" FontWeight="SemiBold" FontSize="14" TextWrapping="Wrap" Foreground="#1A202C" LineHeight="20" Margin="0,0,0,8"/>
+                                    <TextBlock Text="{Binding Description}" FontSize="12" TextWrapping="Wrap" Foreground="#4A5568" LineHeight="18" Margin="0,0,0,10" MinHeight="100" MaxHeight="100" TextTrimming="WordEllipsis"/>
+                                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                        <TextBlock Text="📅" FontSize="12" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                        <TextBlock Text="{Binding DueDate, StringFormat='yyyy-MM-dd'}" FontSize="11" Foreground="#718096" VerticalAlignment="Center"/>
+                                        <TextBlock Text="  " Width="20"/> <!-- Spacer -->
+                                        <TextBlock Text="👤" FontSize="12" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                        <TextBlock Text="{Binding AssignedUser.Username, FallbackValue='Unassigned'}" FontSize="11" Foreground="#718096" VerticalAlignment="Center"/>
+                                        <TextBlock Text="  " Width="20"/> <!-- Spacer -->
+                                        <Button Content="✏️" FontSize="12" Background="Transparent" BorderThickness="0" Padding="4" 
+                                                Cursor="Hand" VerticalAlignment="Center" HorizontalAlignment="Right"
+                                                Click="EditTicket_Click" Tag="{Binding}" Margin="0,0,4,0">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border Background="{TemplateBinding Background}" CornerRadius="2">
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                        <Button Content="🗑️" FontSize="12" Background="Transparent" BorderThickness="0" Padding="4" 
+                                                Cursor="Hand" VerticalAlignment="Center" HorizontalAlignment="Right"
+                                                Click="DeleteTicket_Click" Tag="{Binding}">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border Background="{TemplateBinding Background}" CornerRadius="2">
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
 
-                    <TextBlock Grid.Row="0" Text="My Tickets" FontSize="18" FontWeight="Bold" 
-                               Margin="0,0,0,15" Foreground="{StaticResource TextBrush}"/>
+                <ItemsControl Grid.Column="2" ItemsSource="{Binding TestingTickets}" AllowDrop="True" Drop="Testing_Drop" DragEnter="Testing_DragEnter" DragLeave="Testing_DragLeave" Margin="15,35,15,0" MinHeight="200" Background="Transparent">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource TicketBorderStyle}"
+                                    MouseLeftButtonDown="Ticket_MouseLeftButtonDown" Tag="{Binding}">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Title}" FontWeight="SemiBold" FontSize="14" TextWrapping="Wrap" Foreground="#1A202C" LineHeight="20" Margin="0,0,0,8"/>
+                                    <TextBlock Text="{Binding Description}" FontSize="12" TextWrapping="Wrap" Foreground="#4A5568" LineHeight="18" Margin="0,0,0,10" MinHeight="100" MaxHeight="100" TextTrimming="WordEllipsis"/>
+                                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                        <TextBlock Text="📅" FontSize="12" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                        <TextBlock Text="{Binding DueDate, StringFormat='yyyy-MM-dd'}" FontSize="11" Foreground="#718096" VerticalAlignment="Center"/>
+                                        <TextBlock Text="  " Width="20"/> <!-- Spacer -->
+                                        <TextBlock Text="👤" FontSize="12" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                        <TextBlock Text="{Binding AssignedUser.Username, FallbackValue='Unassigned'}" FontSize="11" Foreground="#718096" VerticalAlignment="Center"/>
+                                        <TextBlock Text="  " Width="20"/> <!-- Spacer -->
+                                        <Button Content="✏️" FontSize="12" Background="Transparent" BorderThickness="0" Padding="4" 
+                                                Cursor="Hand" VerticalAlignment="Center" HorizontalAlignment="Right"
+                                                Click="EditTicket_Click" Tag="{Binding}" Margin="0,0,4,0">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border Background="{TemplateBinding Background}" CornerRadius="2">
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                        <Button Content="🗑️" FontSize="12" Background="Transparent" BorderThickness="0" Padding="4" 
+                                                Cursor="Hand" VerticalAlignment="Center" HorizontalAlignment="Right"
+                                                Click="DeleteTicket_Click" Tag="{Binding}">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border Background="{TemplateBinding Background}" CornerRadius="2">
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
 
-                    <DataGrid Grid.Row="1" ItemsSource="{Binding Tickets}" 
-                              AutoGenerateColumns="False" 
-                              SelectedItem="{Binding SelectedTicket}"
-                              CanUserAddRows="False"
-                              GridLinesVisibility="Horizontal"
-                              HeadersVisibility="Column"
-                              Background="Transparent"
-                              BorderThickness="0"
-                              MouseDoubleClick="DataGrid_MouseDoubleClick">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="*"/>
-                            <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="120"/>
-                            <DataGridTextColumn Header="Due Date" Binding="{Binding DueDate, StringFormat='{}{0:yyyy-MM-dd}'}" Width="100"/>
-                            <DataGridTextColumn Header="Assigned To" Binding="{Binding AssignedUser.FullName}" Width="120"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </Grid>
-            </Border>
+                <ItemsControl Grid.Column="3" ItemsSource="{Binding ResolvedTickets}" AllowDrop="True" Drop="Resolved_Drop" DragEnter="Resolved_DragEnter" DragLeave="Resolved_DragLeave" Margin="15,35,15,0" MinHeight="200" Background="Transparent">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource TicketBorderStyle}"
+                                    MouseLeftButtonDown="Ticket_MouseLeftButtonDown" Tag="{Binding}">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Title}" FontWeight="SemiBold" FontSize="14" TextWrapping="Wrap" Foreground="#1A202C" LineHeight="20" Margin="0,0,0,8"/>
+                                    <TextBlock Text="{Binding Description}" FontSize="12" TextWrapping="Wrap" Foreground="#4A5568" LineHeight="18" Margin="0,0,0,10" MinHeight="100" MaxHeight="100" TextTrimming="WordEllipsis"/>
+                                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                        <TextBlock Text="📅" FontSize="12" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                        <TextBlock Text="{Binding DueDate, StringFormat='yyyy-MM-dd'}" FontSize="11" Foreground="#718096" VerticalAlignment="Center"/>
+                                        <TextBlock Text="  " Width="20"/> <!-- Spacer -->
+                                        <TextBlock Text="👤" FontSize="12" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                        <TextBlock Text="{Binding AssignedUser.Username, FallbackValue='Unassigned'}" FontSize="11" Foreground="#718096" VerticalAlignment="Center"/>
+                                        <TextBlock Text="  " Width="20"/> <!-- Spacer -->
+                                        <Button Content="✏️" FontSize="12" Background="Transparent" BorderThickness="0" Padding="4" 
+                                                Cursor="Hand" VerticalAlignment="Center" HorizontalAlignment="Right"
+                                                Click="EditTicket_Click" Tag="{Binding}" Margin="0,0,4,0">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border Background="{TemplateBinding Background}" CornerRadius="2">
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                        <Button Content="🗑️" FontSize="12" Background="Transparent" BorderThickness="0" Padding="4" 
+                                                Cursor="Hand" VerticalAlignment="Center" HorizontalAlignment="Right"
+                                                Click="DeleteTicket_Click" Tag="{Binding}">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border Background="{TemplateBinding Background}" CornerRadius="2">
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
 
-            <!-- Ticket Details -->
-            <Border Grid.Column="1" Background="{StaticResource CardBrush}" 
-                    BorderBrush="#DDD" BorderThickness="1"
-                    Padding="20" Margin="10,0,0,0">
-                <StackPanel>
-                    <TextBlock Text="Ticket Details" FontSize="18" FontWeight="Bold" 
-                               Margin="0,0,0,15" Foreground="{StaticResource TextBrush}"/>
-
-                    <TextBlock Text="Select a ticket to view details" 
-                               Foreground="{StaticResource TextBrush}"
-                               Visibility="{Binding SelectedTicket, Converter={StaticResource NullToVisibilityConverter}}"/>
-
-                    <StackPanel Visibility="{Binding SelectedTicket, Converter={StaticResource ObjectToVisibilityConverter}}">
-                        <TextBlock Text="Title:" FontWeight="Bold" Margin="0,0,0,5"/>
-                        <TextBox Text="{Binding SelectedTicket.Title}" IsReadOnly="True" Margin="0,0,0,15"/>
-
-                        <TextBlock Text="Description:" FontWeight="Bold" Margin="0,0,0,5"/>
-                        <TextBox Text="{Binding SelectedTicket.Description}" IsReadOnly="True" 
-                                 TextWrapping="Wrap" Height="80" Margin="0,0,0,15"/>
-
-                        <TextBlock Text="Status:" FontWeight="Bold" Margin="0,0,0,5"/>
-                        <ComboBox SelectedItem="{Binding SelectedTicket.Status}" Margin="0,0,0,15">
-                            <ComboBoxItem>To Do</ComboBoxItem>
-                            <ComboBoxItem>Progress</ComboBoxItem>
-                            <ComboBoxItem>Review</ComboBoxItem>
-                            <ComboBoxItem>Done</ComboBoxItem>
-                            <ComboBoxItem>Closed</ComboBoxItem>
-                        </ComboBox>
-
-                        <Button Content="Save Changes" Command="{Binding UpdateTicketCommand}" 
-                                Background="{StaticResource PrimaryBrush}"
-                                Foreground="White"
-                                BorderThickness="0"
-                                Height="35"
-                                Margin="0,10,0,0"/>
-                    </StackPanel>
-                </StackPanel>
-            </Border>
-        </Grid>
+                <ItemsControl Grid.Column="4" ItemsSource="{Binding ClosedTickets}" AllowDrop="True" Drop="Closed_Drop" DragEnter="Closed_DragEnter" DragLeave="Closed_DragLeave" Margin="15,35,15,0" MinHeight="200" Background="Transparent">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource TicketBorderStyle}"
+                                    MouseLeftButtonDown="Ticket_MouseLeftButtonDown" Tag="{Binding}">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Title}" FontWeight="SemiBold" FontSize="14" TextWrapping="Wrap" Foreground="#1A202C" LineHeight="20" Margin="0,0,0,8"/>
+                                    <TextBlock Text="{Binding Description}" FontSize="12" TextWrapping="Wrap" Foreground="#4A5568" LineHeight="18" Margin="0,0,0,10" MinHeight="100" MaxHeight="100" TextTrimming="WordEllipsis"/>
+                                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                        <TextBlock Text="📅" FontSize="12" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                        <TextBlock Text="{Binding DueDate, StringFormat='yyyy-MM-dd'}" FontSize="11" Foreground="#718096" VerticalAlignment="Center"/>
+                                        <TextBlock Text="  " Width="20"/> <!-- Spacer -->
+                                        <TextBlock Text="👤" FontSize="12" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                        <TextBlock Text="{Binding AssignedUser.Username, FallbackValue='Unassigned'}" FontSize="11" Foreground="#718096" VerticalAlignment="Center"/>
+                                        <TextBlock Text="  " Width="20"/> <!-- Spacer -->
+                                        <Button Content="✏️" FontSize="12" Background="Transparent" BorderThickness="0" Padding="4" 
+                                                Cursor="Hand" VerticalAlignment="Center" HorizontalAlignment="Right"
+                                                Click="EditTicket_Click" Tag="{Binding}" Margin="0,0,4,0">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border Background="{TemplateBinding Background}" CornerRadius="2">
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                        <Button Content="🗑️" FontSize="12" Background="Transparent" BorderThickness="0" Padding="4" 
+                                                Cursor="Hand" VerticalAlignment="Center" HorizontalAlignment="Right"
+                                                Click="DeleteTicket_Click" Tag="{Binding}">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border Background="{TemplateBinding Background}" CornerRadius="2">
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </Page>

@@ -9,6 +9,80 @@
                 <ResourceDictionary Source="Resources/Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             
+            <!-- Global Header Style -->
+            <Style x:Key="GlobalHeaderStyle" TargetType="Border">
+                <Setter Property="Background" Value="{StaticResource CardBrush}"/>
+                <Setter Property="Padding" Value="20"/>
+                <Setter Property="Margin" Value="10"/>
+                <Setter Property="CornerRadius" Value="0"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="0"/>
+            </Style>
+            
+            <!-- Global Header Title Style -->
+            <Style x:Key="GlobalHeaderTitleStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="24"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+            </Style>
+            
+            <!-- Global Header Icon Style -->
+            <Style x:Key="GlobalHeaderIconStyle" TargetType="Image">
+                <Setter Property="Width" Value="30"/>
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="Margin" Value="0,0,10,0"/>
+            </Style>
+            
+            <!-- Global Header Label Style -->
+            <Style x:Key="GlobalHeaderLabelStyle" TargetType="TextBlock">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Margin" Value="0,0,10,0"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+            </Style>
+            
+            <!-- Global Header TextBox Style -->
+            <Style x:Key="GlobalHeaderTextBoxStyle" TargetType="TextBox">
+                <Setter Property="Width" Value="200"/>
+                <Setter Property="Margin" Value="0,0,10,0"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Padding" Value="8,6"/>
+                <Setter Property="BorderBrush" Value="#DDD"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Background" Value="White"/>
+            </Style>
+            
+            <!-- Global Header ComboBox Style -->
+            <Style x:Key="GlobalHeaderComboBoxStyle" TargetType="ComboBox">
+                <Setter Property="Width" Value="150"/>
+                <Setter Property="Margin" Value="0,0,10,0"/>
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="BorderBrush" Value="#DDD"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Background" Value="White"/>
+            </Style>
+            
+            <!-- Global Header Button Style -->
+            <Style x:Key="GlobalHeaderButtonStyle" TargetType="Button">
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" CornerRadius="0">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
             <!-- Value Converters -->
             <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
             <converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>

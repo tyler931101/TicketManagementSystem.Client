@@ -15,6 +15,45 @@
                       ShadowDepth="4"
                       Opacity="0.4"/>
 
+	<!-- Modern ScrollBar Style -->
+	<Style x:Key="ModernScrollBarStyle" TargetType="ScrollBar">
+		<Setter Property="Background" Value="#F1F3F4"/>
+		<Setter Property="Foreground" Value="#5F6368"/>
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="Width" Value="12"/>
+		<Setter Property="MinWidth" Value="12"/>
+		<Style.Triggers>
+			<Trigger Property="Orientation" Value="Vertical">
+				<Setter Property="Template">
+					<Setter.Value>
+						<ControlTemplate TargetType="ScrollBar">
+							<Grid>
+								<Border Background="#F1F3F4" CornerRadius="6" Margin="2"/>
+								<Track x:Name="PART_Track" IsDirectionReversed="True">
+									<Track.DecreaseRepeatButton>
+										<RepeatButton Command="ScrollBar.PageUpCommand" Opacity="0" Background="Transparent"/>
+									</Track.DecreaseRepeatButton>
+									<Track.Thumb>
+										<Thumb x:Name="Thumb" Background="#9AA0A6" BorderThickness="0" MinHeight="20">
+											<Thumb.Template>
+												<ControlTemplate TargetType="Thumb">
+													<Border Background="#9AA0A6" CornerRadius="4" Margin="2"/>
+												</ControlTemplate>
+											</Thumb.Template>
+										</Thumb>
+									</Track.Thumb>
+									<Track.IncreaseRepeatButton>
+										<RepeatButton Command="ScrollBar.PageDownCommand" Opacity="0" Background="Transparent"/>
+									</Track.IncreaseRepeatButton>
+								</Track>
+							</Grid>
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</Trigger>
+		</Style.Triggers>
+	</Style>
+
 	<!-- Converters -->
 	<converters:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
 	<converters:InverseBooleanToVisibilityConverter x:Key="InverseBoolToVisibilityConverter"/>

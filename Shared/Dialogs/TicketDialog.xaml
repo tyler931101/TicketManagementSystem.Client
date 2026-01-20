@@ -29,13 +29,13 @@
 
         <!-- Title -->
         <StackPanel Grid.Row="0" Margin="0,0,0,10">
-            <TextBlock Text="Title:" FontWeight="Bold"/>
-            <TextBox x:Name="TitleBox" Margin="0,5,0,0"/>
+            <TextBlock Text="Title:" FontWeight="Bold" VerticalAlignment="Center"/>
+            <TextBox x:Name="TitleBox" Margin="0,5,0,0" VerticalAlignment="Center"/>
         </StackPanel>
 
         <!-- Description -->
         <StackPanel Grid.Row="1" Margin="0,0,0,10">
-            <TextBlock Text="Description:" FontWeight="Bold"/>
+            <TextBlock Text="Description:" FontWeight="Bold" VerticalAlignment="Center"/>
             <TextBox x:Name="DescriptionBox"
                      Margin="0,5,0,0"
                      AcceptsReturn="True"
@@ -46,14 +46,14 @@
 
         <!-- Due Date -->
         <StackPanel Grid.Row="2" Margin="0,0,0,10">
-            <TextBlock Text="Due Date:" FontWeight="Bold"/>
-            <DatePicker x:Name="DueDatePicker" Margin="0,5,0,0"/>
+            <TextBlock Text="Due Date:" FontWeight="Bold" VerticalAlignment="Center"/>
+            <DatePicker x:Name="DueDatePicker" Margin="0,5,0,0" VerticalAlignment="Center" Height="30"/>
         </StackPanel>
 
         <!-- Priority -->
         <StackPanel Grid.Row="3" Margin="0,0,0,10">
-            <TextBlock Text="Priority:" FontWeight="Bold"/>
-            <ComboBox x:Name="PriorityComboBox" Margin="0,5,0,0" Height="30" VerticalAlignment="Center">
+            <TextBlock Text="Priority:" FontWeight="Bold" VerticalAlignment="Center"/>
+            <ComboBox x:Name="PriorityComboBox" Margin="0,5,0,0" VerticalAlignment="Center" Height="30">
                 <ComboBoxItem Content="Low" Tag="Low"/>
                 <ComboBoxItem Content="Medium" Tag="Medium" IsSelected="True"/>
                 <ComboBoxItem Content="High" Tag="High"/>
@@ -63,9 +63,8 @@
 
         <!-- Assigned User -->
         <StackPanel Grid.Row="4" Margin="0,0,0,10">
-            <TextBlock Text="Assigned To:" FontWeight="Bold"/>
-            <ComboBox x:Name="AssignedUserComboBox" Margin="0,5,0,0" Height="30" VerticalAlignment="Center">
-                <ComboBoxItem Content="Unassigned" Tag="{x:Null}"/>
+            <TextBlock Text="Assigned To:" FontWeight="Bold" VerticalAlignment="Center"/>
+            <ComboBox x:Name="AssignedUserComboBox" Margin="0,5,0,0" VerticalAlignment="Center" Height="30">
             </ComboBox>
         </StackPanel>
 
@@ -80,6 +79,7 @@
                     Background="{StaticResource PrimaryBrush}"
                     BorderThickness="0"
                     Width="80"
+                    VerticalAlignment="Center"
                     Height="30"
                     FontSize="15"
                     Margin="10,0,0,0"
@@ -98,6 +98,7 @@
                     Background="{StaticResource PrimaryBrush}"
                     BorderThickness="0"
                     Width="80"
+                    VerticalAlignment="Center"
                     Height="30"
                     FontSize="15"
                     Margin="10,0,0,0"

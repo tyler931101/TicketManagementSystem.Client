@@ -4,21 +4,128 @@
       Title="Calendar">
 
     <Grid Background="{StaticResource BackgroundBrush}">
-        <!-- Main Content -->
-        <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Border Background="{StaticResource CardBrush}"
-                    Padding="40"
-                    Effect="{StaticResource DropShadowEffect}">
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock Text="📅" FontSize="60" Margin="0,0,0,20" 
-                               Foreground="{StaticResource PrimaryBrush}"/>
-                    <TextBlock Text="CalendarPage" FontSize="24" FontWeight="Bold" 
-                               HorizontalAlignment="Center" Margin="0,0,0,10"
-                               Foreground="{StaticResource TextBrush}"/>
-                    <TextBlock Text="Calendar features coming soon!" FontSize="16" 
-                               HorizontalAlignment="Center" Foreground="{StaticResource TextBrush}"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Style="{StaticResource GlobalHeaderStyle}">
+            <StackPanel>
+                <!-- Title Row -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <Image Source="../Resources/PageLinkIcons/calendar.png"
+                            Style="{StaticResource GlobalHeaderIconStyle}"/>
+                    <TextBlock Text="Calendar" Style="{StaticResource GlobalHeaderTitleStyle}"/>
                 </StackPanel>
+                
+                <!-- Calendar Controls Row -->
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="View:" Style="{StaticResource GlobalHeaderLabelStyle}" Width="50"/>
+                    <ComboBox x:Name="ViewComboBox" Style="{StaticResource GlobalHeaderComboBoxStyle}"
+                              Width="120" Margin="0,0,15,0" SelectedIndex="0">
+                        <ComboBoxItem Content="Month"/>
+                        <ComboBoxItem Content="Week"/>
+                        <ComboBoxItem Content="Day"/>
+                        <ComboBoxItem Content="Year"/>
+                    </ComboBox>
+                    
+                    <TextBlock Text="Show:" Style="{StaticResource GlobalHeaderLabelStyle}" VerticalAlignment="Center" Margin="0,0,10,0" Width="50"/>
+                    <CheckBox x:Name="ShowTicketsCheckBox" Content="Tickets" VerticalAlignment="Center" Margin="0,0,15,0" IsChecked="True"/>
+                    <CheckBox x:Name="ShowTasksCheckBox" Content="Tasks" VerticalAlignment="Center" Margin="0,0,15,0" IsChecked="True"/>
+                    
+                    <Button x:Name="TodayButton" Content="Today" 
+                            Style="{StaticResource GlobalHeaderButtonStyle}"
+                            Width="80" Height="30" Margin="10,0,0,0"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- Main Calendar Content -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <ScrollViewer.Resources>
+                <Style TargetType="ScrollBar" BasedOn="{StaticResource ModernScrollBarStyle}"/>
+            </ScrollViewer.Resources>
+
+            <Border Background="{StaticResource CardBrush}" Padding="15,12,15,12" Margin="10">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <!-- Calendar Header -->
+                    <Border Grid.Row="0" Background="#F8F9FA" BorderBrush="#E5E7EB" BorderThickness="0,0,0,1" Padding="15,10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- Previous Month Button -->
+                            <Button Grid.Column="0" x:Name="PreviousMonthBtn" 
+                                    Background="Transparent" BorderThickness="0"
+                                    Padding="8" Margin="0,0,10,0"
+                                    Cursor="Hand">
+                                <TextBlock Text="◀" FontSize="16" Foreground="#6B7280"/>
+                            </Button>
+                            
+                            <!-- Current Month/Year -->
+                            <TextBlock Grid.Column="1" x:Name="CurrentMonthText" 
+                                       Text="November 2025" 
+                                       FontSize="18" FontWeight="SemiBold" 
+                                       HorizontalAlignment="Center" 
+                                       VerticalAlignment="Center"
+                                       Foreground="#1F2937"/>
+                            
+                            <!-- Next Month Button -->
+                            <Button Grid.Column="2" x:Name="NextMonthBtn" 
+                                    Background="Transparent" BorderThickness="0"
+                                    Padding="8" Margin="10,0,0,0"
+                                    Cursor="Hand">
+                                <TextBlock Text="▶" FontSize="16" Foreground="#6B7280"/>
+                            </Button>
+                        </Grid>
+                    </Border>
+                    
+                    <!-- Weekday Headers -->
+                    <Border Grid.Row="1" Background="#F3F4F6" BorderBrush="#E5E7EB" BorderThickness="0,0,0,1">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <TextBlock Grid.Column="0" Text="Sun" HorizontalAlignment="Center" 
+                                       FontSize="14" FontWeight="SemiBold" Foreground="#6B7280" Padding="10"/>
+                            <TextBlock Grid.Column="1" Text="Mon" HorizontalAlignment="Center" 
+                                       FontSize="14" FontWeight="SemiBold" Foreground="#374151" Padding="10"/>
+                            <TextBlock Grid.Column="2" Text="Tue" HorizontalAlignment="Center" 
+                                       FontSize="14" FontWeight="SemiBold" Foreground="#374151" Padding="10"/>
+                            <TextBlock Grid.Column="3" Text="Wed" HorizontalAlignment="Center" 
+                                       FontSize="14" FontWeight="SemiBold" Foreground="#374151" Padding="10"/>
+                            <TextBlock Grid.Column="4" Text="Thu" HorizontalAlignment="Center" 
+                                       FontSize="14" FontWeight="SemiBold" Foreground="#374151" Padding="10"/>
+                            <TextBlock Grid.Column="5" Text="Fri" HorizontalAlignment="Center" 
+                                       FontSize="14" FontWeight="SemiBold" Foreground="#374151" Padding="10"/>
+                            <TextBlock Grid.Column="6" Text="Sat" HorizontalAlignment="Center" 
+                                       FontSize="14" FontWeight="SemiBold" Foreground="#6B7280" Padding="10"/>
+                        </Grid>
+                    </Border>
+                    
+                    <!-- Calendar Days Grid -->
+                    <Grid Grid.Row="2" x:Name="CalendarDaysGrid">
+                        <!-- Grid definitions will be created dynamically in code -->
+                    </Grid>
+                </Grid>
             </Border>
-        </Grid>
+        </ScrollViewer>
     </Grid>
 </Page>

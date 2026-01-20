@@ -17,9 +17,6 @@ namespace TicketManagementSystem.Client.Shared.Dialogs
         {
             InitializeComponent();
             
-            // Load users from database
-            LoadUsersAsync();
-
             if (ticket != null)
             {
                 // Edit mode
@@ -37,15 +34,6 @@ namespace TicketManagementSystem.Client.Shared.Dialogs
                 if (priorityItem != null)
                     PriorityComboBox.SelectedItem = priorityItem;
                 
-                // Set assigned user - delay selection until users are loaded
-                this.Loaded += (s, e) =>
-                {
-                    var selectedUser = AssignedUserComboBox.Items.Cast<ComboBoxItem>()
-                        .FirstOrDefault(item => item.Tag?.ToString() == ticket.AssignedTo?.ToString());
-                    if (selectedUser != null)
-                        AssignedUserComboBox.SelectedItem = selectedUser;
-                };
-
                 // Store original ticket for updating
                 Tag = ticket;
             }
@@ -56,6 +44,9 @@ namespace TicketManagementSystem.Client.Shared.Dialogs
                 Title = "Create Ticket";
                 CreateButton.Content = "Create";
             }
+            
+            // Load users from database (this will set assigned user if in edit mode)
+            LoadUsersAsync();
         }
 
         private async void LoadUsersAsync()
@@ -63,11 +54,10 @@ namespace TicketManagementSystem.Client.Shared.Dialogs
             try
             {
                 var userService = new UserService();
-                var response = await userService.GetUsersAsync();
+                var response = await userService.GetTicketUsersAsync();
                 
-                // Clear existing items except "Unassigned"
+                // Clear existing items
                 AssignedUserComboBox.Items.Clear();
-                AssignedUserComboBox.Items.Add(new ComboBoxItem { Content = "Unassigned", Tag = null });
                 
                 // Add users to ComboBox if API call was successful
                 if (response != null && response.Success && response.Data != null)
@@ -77,9 +67,52 @@ namespace TicketManagementSystem.Client.Shared.Dialogs
                         var item = new ComboBoxItem
                         {
                             Content = user.Username,
-                            Tag = user.Id
+                            Tag = user.Id.ToString()
                         };
                         AssignedUserComboBox.Items.Add(item);
+                    }
+                    
+                    // Set assigned user if in edit mode (after users are loaded)
+                    if (_isEditMode && Tag is Ticket ticket)
+                    {
+                        // Debug: Log the ticket's assigned user
+                        System.Diagnostics.Debug.WriteLine($"Ticket assigned user: {ticket.AssignedTo}");
+                        
+                        ComboBoxItem? selectedUser = null;
+                        
+                        // First try to match by ID (if AssignedTo contains user ID)
+                        if (!string.IsNullOrEmpty(ticket.AssignedTo))
+                        {
+                            selectedUser = AssignedUserComboBox.Items.Cast<ComboBoxItem>()
+                                .FirstOrDefault(item => item.Tag?.ToString() == ticket.AssignedTo);
+                            
+                            System.Diagnostics.Debug.WriteLine($"Tried ID match: {selectedUser != null}");
+                        }
+                        
+                        // If ID match failed, try to match by username
+                        if (selectedUser == null && !string.IsNullOrEmpty(ticket.AssignedTo))
+                        {
+                            selectedUser = AssignedUserComboBox.Items.Cast<ComboBoxItem>()
+                                .FirstOrDefault(item => item.Content?.ToString() == ticket.AssignedTo);
+                            
+                            System.Diagnostics.Debug.WriteLine($"Tried username match: {selectedUser != null}");
+                        }
+                        
+                        // Debug: Log available users
+                        foreach (ComboBoxItem item in AssignedUserComboBox.Items)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"Available user: {item.Content} (ID: {item.Tag})");
+                        }
+                        
+                        if (selectedUser != null)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"Found matching user: {selectedUser.Content}");
+                            AssignedUserComboBox.SelectedItem = selectedUser;
+                        }
+                        else
+                        {
+                            System.Diagnostics.Debug.WriteLine("No matching user found");
+                        }
                     }
                 }
             }
