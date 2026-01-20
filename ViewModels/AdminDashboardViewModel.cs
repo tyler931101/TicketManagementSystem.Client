@@ -129,18 +129,23 @@ namespace TicketManagementSystem.Client.ViewModels
                     
                     // Use efficient object initialization
                     var userDtos = new List<UserDto>(pagedData.Data.Count());
+                    var index = 0;
                     foreach (var serverUser in pagedData.Data)
                     {
                         userDtos.Add(new UserDto
                         {
+                            RowNumber = (CurrentPage - 1) * PageSize + index + 1,
                             Id = serverUser.Id.ToString(),
                             Username = serverUser.Username,
                             Email = serverUser.Email,
+                            Address = serverUser.Address,
+                            PhoneNumber = serverUser.PhoneNumber,
                             Role = serverUser.Role,
                             IsLoginAllowed = serverUser.IsLoginAllowed,
                             CreatedAt = DateTime.UtcNow,
                             UpdatedAt = DateTime.UtcNow
                         });
+                        index++;
                     }
 
                     // Update UI on UI thread
@@ -175,7 +180,6 @@ namespace TicketManagementSystem.Client.ViewModels
         private void UpdatePaginationInfo(PagedResponseDto<User> pagedData)
         {
             CurrentPage = pagedData.CurrentPage;
-            PageSize = pagedData.PageSize;
             TotalRecords = pagedData.TotalRecords;
             LastPageNumber = pagedData.TotalPages;
             
@@ -220,10 +224,10 @@ namespace TicketManagementSystem.Client.ViewModels
                 {
                     // Show first page + last 4 pages (last page shown separately)
                     pageNumbers.Add(1);
-                    for (int i = LastPageNumber - 4; i < LastPageNumber; i++) // Exclude last page
+                    var startPage = Math.Max(2, LastPageNumber - 4); // Start from at least page 2
+                    for (int i = startPage; i < LastPageNumber; i++) // Exclude last page
                     {
-                        if (i > 0) // Don't add negative or zero page numbers
-                            pageNumbers.Add(i);
+                        pageNumbers.Add(i);
                     }
                 }
                 else

@@ -50,7 +50,7 @@ namespace TicketManagementSystem.Client.Views
         {
             if (ViewComboBox.SelectedItem is ComboBoxItem selectedItem && selectedItem.Content != null)
             {
-                _currentViewMode = selectedItem.Content.ToString();
+                _currentViewMode = selectedItem.Content.ToString() ?? "Month";
                 UpdateCalendarDisplay();
             }
         }

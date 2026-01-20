@@ -27,5 +27,7 @@ namespace TicketManagementSystem.Client.Models
 
         public string? AvatarPath { get; set; }
         public bool IsLoginAllowed { get; set; } = true;
+        public string? PhoneNumber { get; set; } = string.Empty;
+        public string Address { get; set; } = string.Empty;
     }
 }

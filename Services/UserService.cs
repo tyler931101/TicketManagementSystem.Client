@@ -24,10 +24,24 @@ namespace TicketManagementSystem.Client.Services
             _httpClient.Timeout = TimeSpan.FromSeconds(30); // Add timeout
         }
 
+        private void PrepareRequest()
+        {
+            if (!string.IsNullOrEmpty(AuthenticationService.CurrentToken))
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = 
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AuthenticationService.CurrentToken);
+            }
+            else
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = null;
+            }
+        }
+
         public async Task<ApiResponse<PagedResponseDto<User>>> GetUsersAsync(PagedRequestDto request)
         {
             try
             {
+                PrepareRequest();
                 // Create cache key
                 var cacheKey = $"users_{request.PageNumber}_{request.PageSize}_{request.SearchTerm}";
                 
@@ -118,6 +132,7 @@ namespace TicketManagementSystem.Client.Services
         {
             try
             {
+                PrepareRequest();
                 var response = await _httpClient.GetAsync($"{BaseUrl}/users/ticket-users");
                 
                 Console.WriteLine($"API Response Status: {response.StatusCode}");
@@ -157,6 +172,7 @@ namespace TicketManagementSystem.Client.Services
         {
             try
             {
+                PrepareRequest();
                 var response = await _httpClient.PostAsJsonAsync($"{BaseUrl}/users/{userId}/toggle-login", 
                     new { IsAllowed = isAllowed });
                 

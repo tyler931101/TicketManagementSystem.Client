@@ -46,7 +46,7 @@
         </Grid.RowDefinitions>
 
         <!-- Header -->
-        <Border Grid.Row="0" Style="{StaticResource GlobalHeaderStyle}">
+        <Border Grid.Row="0" Style="{StaticResource GlobalHeaderStyle}" BorderBrush="#E0E0E0" BorderThickness="1">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -54,7 +54,7 @@
                 </Grid.RowDefinitions>
                 
                 <!-- Title Row -->
-                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,15">
                     <Image Source="../Resources/PageLinkIcons/ticket.png"
                             Style="{StaticResource GlobalHeaderIconStyle}"/>
                     <TextBlock Text="Ticket Management" Style="{StaticResource GlobalHeaderTitleStyle}"/>

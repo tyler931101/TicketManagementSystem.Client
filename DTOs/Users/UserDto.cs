@@ -4,6 +4,8 @@ namespace TicketManagementSystem.Client.DTOs.Users
 {
     public class UserDto
     {
+        public int RowNumber { get; set; }
+        
         public string Id { get; set; } = string.Empty;
 
         [Required]
@@ -14,6 +16,12 @@ namespace TicketManagementSystem.Client.DTOs.Users
         [EmailAddress]
         [StringLength(100)]
         public string Email { get; set; } = string.Empty;
+
+        [StringLength(20)]
+        public string? PhoneNumber { get; set; } = string.Empty;
+
+        [StringLength(100)]
+        public string Address { get; set; } = string.Empty;
 
         [Required]
         [StringLength(20)]
@@ -37,6 +45,12 @@ namespace TicketManagementSystem.Client.DTOs.Users
         [EmailAddress(ErrorMessage = "Invalid email format")]
         [StringLength(100, ErrorMessage = "Email cannot exceed 100 characters")]
         public string? Email { get; set; }
+
+        [StringLength(100, ErrorMessage = "Phone number cannot exceed 200 characters")]
+        public string? PhoneNumber { get; set; }
+
+        [StringLength(20, ErrorMessage = "Address cannot exceed 100 characters")]
+        public string? Address { get; set; }
 
         [StringLength(20, ErrorMessage = "Role cannot exceed 20 characters")]
         public string? Role { get; set; }

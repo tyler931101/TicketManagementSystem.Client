@@ -33,7 +33,7 @@ namespace TicketManagementSystem.Client.Services
                         Email = result.Data.User.Email,
                         Role = result.Data.User.Role,
                         IsLoginAllowed = result.Data.User.IsLoginAllowed
-                    });
+                    }, result.Data.Token);
                 }
                 
                 return result ?? ApiResponse<AuthResponse>.ErrorResult("Login failed");

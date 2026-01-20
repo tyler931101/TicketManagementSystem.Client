@@ -45,6 +45,7 @@ namespace TicketManagementSystem.Client.DTOs.Tickets
 
         [Required(ErrorMessage = "Due date is required")]
         [DataType(DataType.DateTime)]
+        [FutureDate(ErrorMessage = "Due date must be in the future")]
         public DateTime DueDate { get; set; }
 
         [Required(ErrorMessage = "Priority is required")]
@@ -90,5 +91,21 @@ namespace TicketManagementSystem.Client.DTOs.Tickets
         public int PageSize { get; set; } = 10;
         public string? SortBy { get; set; } = "CreatedAt";
         public bool SortDescending { get; set; } = true;
+    }
+
+    // Custom validation attribute for future dates
+    public class FutureDateAttribute : ValidationAttribute
+    {
+        protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
+        {
+            if (value is DateTime dateTime)
+            {
+                if (dateTime <= DateTime.Now)
+                {
+                    return new ValidationResult(ErrorMessage ?? "Date must be in the future");
+                }
+            }
+            return ValidationResult.Success;
+        }
     }
 }

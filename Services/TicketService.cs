@@ -16,10 +16,24 @@ namespace TicketManagementSystem.Client.Services
             _httpClient.DefaultRequestHeaders.Add("User-Agent", "TicketManagementClient");
         }
 
+        private void PrepareRequest()
+        {
+            if (!string.IsNullOrEmpty(AuthenticationService.CurrentToken))
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = 
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AuthenticationService.CurrentToken);
+            }
+            else
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = null;
+            }
+        }
+
         public async Task<ApiResponse<List<TicketDto>>> GetTicketsAsync()
         {
             try
             {
+                PrepareRequest();
                 var response = await _httpClient.GetAsync($"{BaseUrl}/tickets");
                 var result = await response.Content.ReadFromJsonAsync<ApiResponse<List<TicketDto>>>();
                 return result ?? ApiResponse<List<TicketDto>>.ErrorResult("Failed to fetch tickets");
@@ -34,6 +48,7 @@ namespace TicketManagementSystem.Client.Services
         {
             try
             {
+                PrepareRequest();
                 var response = await _httpClient.GetAsync($"{BaseUrl}/tickets/user/{username}");
                 var result = await response.Content.ReadFromJsonAsync<ApiResponse<List<TicketDto>>>();
                 return result ?? ApiResponse<List<TicketDto>>.ErrorResult("Failed to fetch user tickets");
@@ -48,6 +63,7 @@ namespace TicketManagementSystem.Client.Services
         {
             try
             {
+                PrepareRequest();
                 var response = await _httpClient.PostAsJsonAsync($"{BaseUrl}/tickets", createTicketDto);
                 var result = await response.Content.ReadFromJsonAsync<ApiResponse<TicketDto>>();
                 return result ?? ApiResponse<TicketDto>.ErrorResult("Failed to create ticket");
@@ -76,6 +92,7 @@ namespace TicketManagementSystem.Client.Services
                 // Debug: Log the request details
                 Console.WriteLine($"Updating ticket {ticketId} with data: Title={serverRequest.Title}, Status={serverRequest.Status}");
                 
+                PrepareRequest();
                 var response = await _httpClient.PutAsJsonAsync($"{BaseUrl}/tickets/{ticketId}", serverRequest);
                 
                 Console.WriteLine($"Response status: {response.StatusCode}");
@@ -109,6 +126,7 @@ namespace TicketManagementSystem.Client.Services
             {
                 Console.WriteLine($"Attempting to delete ticket {ticketId}");
                 
+                PrepareRequest();
                 var response = await _httpClient.DeleteAsync($"{BaseUrl}/tickets/{ticketId}");
                 
                 Console.WriteLine($"Delete response status: {response.StatusCode}");
