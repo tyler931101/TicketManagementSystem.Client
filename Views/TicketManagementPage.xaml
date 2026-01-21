@@ -214,24 +214,26 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
-                <ItemsControl Grid.Column="2" ItemsSource="{Binding TestingTickets}" AllowDrop="True" Drop="Testing_Drop" DragEnter="Testing_DragEnter" DragLeave="Testing_DragLeave" Margin="15,35,15,0" MinHeight="200" Background="Transparent">
+                <ItemsControl Grid.Column="2" ItemsSource="{Binding ResolvedTickets}" AllowDrop="True" Drop="Resolved_Drop" DragEnter="Resolved_DragEnter" DragLeave="Resolved_DragLeave" Margin="15,35,15,0" MinHeight="200" Background="Transparent">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border Style="{StaticResource TicketBorderStyle}"
-                                    MouseLeftButtonDown="Ticket_MouseLeftButtonDown" Tag="{Binding}">
+                    MouseLeftButtonDown="Ticket_MouseLeftButtonDown" Tag="{Binding}">
                                 <StackPanel>
                                     <TextBlock Text="{Binding Title}" FontWeight="SemiBold" FontSize="14" TextWrapping="Wrap" Foreground="#1A202C" LineHeight="20" Margin="0,0,0,8"/>
                                     <TextBlock Text="{Binding Description}" FontSize="12" TextWrapping="Wrap" Foreground="#4A5568" LineHeight="18" Margin="0,0,0,10" MinHeight="100" MaxHeight="100" TextTrimming="WordEllipsis"/>
                                     <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
                                         <TextBlock Text="📅" FontSize="12" VerticalAlignment="Center" Margin="0,0,6,0"/>
                                         <TextBlock Text="{Binding DueDate, StringFormat='yyyy-MM-dd'}" FontSize="11" Foreground="#718096" VerticalAlignment="Center"/>
-                                        <TextBlock Text="  " Width="20"/> <!-- Spacer -->
+                                        <TextBlock Text="  " Width="20"/>
+                                        <!-- Spacer -->
                                         <TextBlock Text="👤" FontSize="12" VerticalAlignment="Center" Margin="0,0,6,0"/>
                                         <TextBlock Text="{Binding AssignedUser.Username, FallbackValue='Unassigned'}" FontSize="11" Foreground="#718096" VerticalAlignment="Center"/>
-                                        <TextBlock Text="  " Width="20"/> <!-- Spacer -->
+                                        <TextBlock Text="  " Width="20"/>
+                                        <!-- Spacer -->
                                         <Button Content="✏️" FontSize="12" Background="Transparent" BorderThickness="0" Padding="4" 
-                                                Cursor="Hand" VerticalAlignment="Center" HorizontalAlignment="Right"
-                                                Click="EditTicket_Click" Tag="{Binding}" Margin="0,0,4,0">
+                                Cursor="Hand" VerticalAlignment="Center" HorizontalAlignment="Right"
+                                Click="EditTicket_Click" Tag="{Binding}" Margin="0,0,4,0">
                                             <Button.Template>
                                                 <ControlTemplate TargetType="Button">
                                                     <Border Background="{TemplateBinding Background}" CornerRadius="2">
@@ -241,8 +243,8 @@
                                             </Button.Template>
                                         </Button>
                                         <Button Content="🗑️" FontSize="12" Background="Transparent" BorderThickness="0" Padding="4" 
-                                                Cursor="Hand" VerticalAlignment="Center" HorizontalAlignment="Right"
-                                                Click="DeleteTicket_Click" Tag="{Binding}">
+                                Cursor="Hand" VerticalAlignment="Center" HorizontalAlignment="Right"
+                                Click="DeleteTicket_Click" Tag="{Binding}">
                                             <Button.Template>
                                                 <ControlTemplate TargetType="Button">
                                                     <Border Background="{TemplateBinding Background}" CornerRadius="2">
@@ -258,7 +260,7 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
-                <ItemsControl Grid.Column="3" ItemsSource="{Binding ResolvedTickets}" AllowDrop="True" Drop="Resolved_Drop" DragEnter="Resolved_DragEnter" DragLeave="Resolved_DragLeave" Margin="15,35,15,0" MinHeight="200" Background="Transparent">
+                <ItemsControl Grid.Column="3" ItemsSource="{Binding TestingTickets}" AllowDrop="True" Drop="Testing_Drop" DragEnter="Testing_DragEnter" DragLeave="Testing_DragLeave" Margin="15,35,15,0" MinHeight="200" Background="Transparent">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border Style="{StaticResource TicketBorderStyle}"
@@ -269,10 +271,12 @@
                                     <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
                                         <TextBlock Text="📅" FontSize="12" VerticalAlignment="Center" Margin="0,0,6,0"/>
                                         <TextBlock Text="{Binding DueDate, StringFormat='yyyy-MM-dd'}" FontSize="11" Foreground="#718096" VerticalAlignment="Center"/>
-                                        <TextBlock Text="  " Width="20"/> <!-- Spacer -->
+                                        <TextBlock Text="  " Width="20"/>
+                                        <!-- Spacer -->
                                         <TextBlock Text="👤" FontSize="12" VerticalAlignment="Center" Margin="0,0,6,0"/>
                                         <TextBlock Text="{Binding AssignedUser.Username, FallbackValue='Unassigned'}" FontSize="11" Foreground="#718096" VerticalAlignment="Center"/>
-                                        <TextBlock Text="  " Width="20"/> <!-- Spacer -->
+                                        <TextBlock Text="  " Width="20"/>
+                                        <!-- Spacer -->
                                         <Button Content="✏️" FontSize="12" Background="Transparent" BorderThickness="0" Padding="4" 
                                                 Cursor="Hand" VerticalAlignment="Center" HorizontalAlignment="Right"
                                                 Click="EditTicket_Click" Tag="{Binding}" Margin="0,0,4,0">
