@@ -54,7 +54,7 @@
                 </Grid.RowDefinitions>
                 
                 <!-- Title Row -->
-                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,15">
+                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
                     <Image Source="../Resources/PageLinkIcons/ticket.png"
                             Style="{StaticResource GlobalHeaderIconStyle}"/>
                     <TextBlock Text="Ticket Management" Style="{StaticResource GlobalHeaderTitleStyle}"/>
@@ -70,25 +70,105 @@
                     <!-- Search and Filter Controls -->
                     <StackPanel Grid.Column="0" Orientation="Horizontal">
                         <TextBlock Text="Search:" Style="{StaticResource GlobalHeaderLabelStyle}" Width="60"/>
-                        <TextBox x:Name="SearchBox" Style="{StaticResource GlobalHeaderTextBoxStyle}"
+                        <TextBox x:Name="SearchBox" 
                                 Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" 
-                                TextChanged="SearchBox_TextChanged"/>
+                                TextChanged="SearchBox_TextChanged"
+                                Height="35"
+                                Padding="8,6"
+                                BorderThickness="1"
+                                BorderBrush="#D1D5DB"
+                                Background="White"
+                                FontSize="14"
+                                Width="200"
+                                Margin="0,0,10,0"
+                                VerticalAlignment="Center"/>
                         
                         <TextBlock Text="Assigned User:" Style="{StaticResource GlobalHeaderLabelStyle}" Width="90"/>
-                        <ComboBox x:Name="AssignedUserFilter" Style="{StaticResource GlobalHeaderComboBoxStyle}"
+                        <ComboBox x:Name="AssignedUserFilter"
                                 ItemsSource="{Binding AssignedUsers}" 
                                 SelectedItem="{Binding SelectedAssignedUser}"
-                                SelectionChanged="AssignedUserFilter_SelectionChanged"/>
+                                SelectionChanged="AssignedUserFilter_SelectionChanged"
+                                Height="35"
+                                Padding="8,6"
+                                BorderThickness="1"
+                                BorderBrush="#D1D5DB"
+                                Background="White"
+                                FontSize="14"
+                                Width="150"
+                                Margin="0,0,10,0"
+                                VerticalAlignment="Center"/>
+
                         
                         <Button Content="Clear Filters" Command="{Binding ClearFiltersCommand}" 
-                                Style="{StaticResource GlobalHeaderButtonStyle}"
-                                Width="100" Height="30" Margin="10,0,0,0"/>
+                                Height="35"
+                                FontSize="14"
+                                FontWeight="SemiBold"
+                                Padding="12,0"
+                                Background="{StaticResource PrimaryBrush}"
+                                Foreground="White"
+                                BorderThickness="0"
+                                Cursor="Hand"
+                                Width="100" 
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Center">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}"
+                                                        CornerRadius="4"
+                                                        BorderThickness="0"
+                                                        Padding="{TemplateBinding Padding}">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#2563EB"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
                     </StackPanel>
                     
                     <!-- Add Button in Right Corner -->
                     <Button Grid.Column="1" Content="Add" Command="{Binding AddTicketCommand}" 
-                            Style="{StaticResource GlobalHeaderButtonStyle}"
-                            Width="80" Height="30" VerticalAlignment="Top"/>
+                            Height="35"
+                            FontSize="14"
+                            FontWeight="SemiBold"
+                            Padding="12,0"
+                            Background="{StaticResource PrimaryBrush}"
+                            Foreground="White"
+                            BorderThickness="0"
+                            Cursor="Hand"
+                            Width="80" 
+                            VerticalAlignment="Top">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}"
+                                                    CornerRadius="4"
+                                                    BorderThickness="0"
+                                                    Padding="{TemplateBinding Padding}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#2563EB"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
                 </Grid>
             </Grid>
         </Border>
@@ -109,19 +189,19 @@
                 </Grid.ColumnDefinitions>
                         
                 <!-- Status Headers -->
-                <Border Grid.Column="0" Background="{StaticResource CardBrush}" BorderBrush="#DDD" BorderThickness="1" Margin="0,0,5,0" Padding="15,12,15,12">
+                <Border Grid.Column="0" Background="{StaticResource CardBrush}" BorderBrush="#D1D5DB" BorderThickness="1" Margin="0,0,5,0" Padding="15,12,15,12" CornerRadius="4">
                     <TextBlock Text="To Do" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Center" Foreground="#2C3E50" TextOptions.TextFormattingMode="Display"/>
                 </Border>
-                <Border Grid.Column="1" Background="{StaticResource CardBrush}" BorderBrush="#DDD" BorderThickness="1" Margin="5,0,5,0" Padding="15,12,15,12">
+                <Border Grid.Column="1" Background="{StaticResource CardBrush}" BorderBrush="#D1D5DB" BorderThickness="1" Margin="5,0,5,0" Padding="15,12,15,12" CornerRadius="4">
                     <TextBlock Text="In Progress" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Center" Foreground="#2C3E50" TextOptions.TextFormattingMode="Display"/>
                 </Border>
-                <Border Grid.Column="2" Background="{StaticResource CardBrush}" BorderBrush="#DDD" BorderThickness="1" Margin="5,0,5,0" Padding="15,12,15,12">
+                <Border Grid.Column="2" Background="{StaticResource CardBrush}" BorderBrush="#D1D5DB" BorderThickness="1" Margin="5,0,5,0" Padding="15,12,15,12" CornerRadius="4">
                     <TextBlock Text="Testing" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Center" Foreground="#2C3E50" TextOptions.TextFormattingMode="Display"/>
                 </Border>
-                <Border Grid.Column="3" Background="{StaticResource CardBrush}" BorderBrush="#DDD" BorderThickness="1" Margin="5,0,5,0" Padding="15,12,15,12">
+                <Border Grid.Column="3" Background="{StaticResource CardBrush}" BorderBrush="#D1D5DB" BorderThickness="1" Margin="5,0,5,0" Padding="15,12,15,12" CornerRadius="4">
                     <TextBlock Text="Resolved" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Center" Foreground="#2C3E50" TextOptions.TextFormattingMode="Display"/>
                 </Border>
-                <Border Grid.Column="4" Background="{StaticResource CardBrush}" BorderBrush="#DDD" BorderThickness="1" Margin="5,0,0,0" Padding="15,12,15,12">
+                <Border Grid.Column="4" Background="{StaticResource CardBrush}" BorderBrush="#D1D5DB" BorderThickness="1" Margin="5,0,0,0" Padding="15,12,15,12" CornerRadius="4">
                     <TextBlock Text="Closed" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Center" Foreground="#2C3E50" TextOptions.TextFormattingMode="Display"/>
                 </Border>
                 
@@ -141,27 +221,49 @@
                                         <TextBlock Text="👤" FontSize="12" VerticalAlignment="Center" Margin="0,0,6,0"/>
                                         <TextBlock Text="{Binding AssignedUser.Username, FallbackValue='Unassigned'}" FontSize="11" Foreground="#718096" VerticalAlignment="Center"/>
                                         <TextBlock Text="  " Width="20"/> <!-- Spacer -->
-                                        <Button Content="✏️" FontSize="12" Background="Transparent" BorderThickness="0" Padding="4" 
+                                        <Button Content="✏️" FontSize="12" Background="Transparent" BorderThickness="0" Padding="6" 
                                                 Cursor="Hand" VerticalAlignment="Center" HorizontalAlignment="Right"
                                                 Click="EditTicket_Click" Tag="{Binding}" Margin="0,0,4,0">
-                                            <Button.Template>
-                                                <ControlTemplate TargetType="Button">
-                                                    <Border Background="{TemplateBinding Background}" CornerRadius="2">
-                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </Button.Template>
+                                            <Button.Style>
+                                                <Style TargetType="Button">
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="Button">
+                                                                <Border Background="{TemplateBinding Background}" CornerRadius="4" Padding="{TemplateBinding Padding}">
+                                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                </Border>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="#E3F2FD"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
                                         </Button>
-                                        <Button Content="🗑️" FontSize="12" Background="Transparent" BorderThickness="0" Padding="4" 
+                                        <Button Content="🗑️" FontSize="12" Background="Transparent" BorderThickness="0" Padding="6" 
                                                 Cursor="Hand" VerticalAlignment="Center" HorizontalAlignment="Right"
                                                 Click="DeleteTicket_Click" Tag="{Binding}">
-                                            <Button.Template>
-                                                <ControlTemplate TargetType="Button">
-                                                    <Border Background="{TemplateBinding Background}" CornerRadius="2">
-                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </Button.Template>
+                                            <Button.Style>
+                                                <Style TargetType="Button">
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="Button">
+                                                                <Border Background="{TemplateBinding Background}" CornerRadius="4" Padding="{TemplateBinding Padding}">
+                                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                </Border>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="#FFEBEE"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
                                         </Button>
                                     </StackPanel>
                                 </StackPanel>
@@ -185,27 +287,49 @@
                                         <TextBlock Text="👤" FontSize="12" VerticalAlignment="Center" Margin="0,0,6,0"/>
                                         <TextBlock Text="{Binding AssignedUser.Username, FallbackValue='Unassigned'}" FontSize="11" Foreground="#718096" VerticalAlignment="Center"/>
                                         <TextBlock Text="  " Width="20"/> <!-- Spacer -->
-                                        <Button Content="✏️" FontSize="12" Background="Transparent" BorderThickness="0" Padding="4" 
+                                        <Button Content="✏️" FontSize="12" Background="Transparent" BorderThickness="0" Padding="6" 
                                                 Cursor="Hand" VerticalAlignment="Center" HorizontalAlignment="Right"
                                                 Click="EditTicket_Click" Tag="{Binding}" Margin="0,0,4,0">
-                                            <Button.Template>
-                                                <ControlTemplate TargetType="Button">
-                                                    <Border Background="{TemplateBinding Background}" CornerRadius="2">
-                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </Button.Template>
+                                            <Button.Style>
+                                                <Style TargetType="Button">
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="Button">
+                                                                <Border Background="{TemplateBinding Background}" CornerRadius="4" Padding="{TemplateBinding Padding}">
+                                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                </Border>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="#E3F2FD"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
                                         </Button>
-                                        <Button Content="🗑️" FontSize="12" Background="Transparent" BorderThickness="0" Padding="4" 
+                                        <Button Content="🗑️" FontSize="12" Background="Transparent" BorderThickness="0" Padding="6" 
                                                 Cursor="Hand" VerticalAlignment="Center" HorizontalAlignment="Right"
                                                 Click="DeleteTicket_Click" Tag="{Binding}">
-                                            <Button.Template>
-                                                <ControlTemplate TargetType="Button">
-                                                    <Border Background="{TemplateBinding Background}" CornerRadius="2">
-                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </Button.Template>
+                                            <Button.Style>
+                                                <Style TargetType="Button">
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="Button">
+                                                                <Border Background="{TemplateBinding Background}" CornerRadius="4" Padding="{TemplateBinding Padding}">
+                                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                </Border>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="#FFEBEE"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
                                         </Button>
                                     </StackPanel>
                                 </StackPanel>
@@ -277,27 +401,49 @@
                                         <TextBlock Text="{Binding AssignedUser.Username, FallbackValue='Unassigned'}" FontSize="11" Foreground="#718096" VerticalAlignment="Center"/>
                                         <TextBlock Text="  " Width="20"/>
                                         <!-- Spacer -->
-                                        <Button Content="✏️" FontSize="12" Background="Transparent" BorderThickness="0" Padding="4" 
+                                        <Button Content="✏️" FontSize="12" Background="Transparent" BorderThickness="0" Padding="6" 
                                                 Cursor="Hand" VerticalAlignment="Center" HorizontalAlignment="Right"
                                                 Click="EditTicket_Click" Tag="{Binding}" Margin="0,0,4,0">
-                                            <Button.Template>
-                                                <ControlTemplate TargetType="Button">
-                                                    <Border Background="{TemplateBinding Background}" CornerRadius="2">
-                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </Button.Template>
+                                            <Button.Style>
+                                                <Style TargetType="Button">
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="Button">
+                                                                <Border Background="{TemplateBinding Background}" CornerRadius="4" Padding="{TemplateBinding Padding}">
+                                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                </Border>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="#E3F2FD"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
                                         </Button>
-                                        <Button Content="🗑️" FontSize="12" Background="Transparent" BorderThickness="0" Padding="4" 
+                                        <Button Content="🗑️" FontSize="12" Background="Transparent" BorderThickness="0" Padding="6" 
                                                 Cursor="Hand" VerticalAlignment="Center" HorizontalAlignment="Right"
                                                 Click="DeleteTicket_Click" Tag="{Binding}">
-                                            <Button.Template>
-                                                <ControlTemplate TargetType="Button">
-                                                    <Border Background="{TemplateBinding Background}" CornerRadius="2">
-                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </Button.Template>
+                                            <Button.Style>
+                                                <Style TargetType="Button">
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="Button">
+                                                                <Border Background="{TemplateBinding Background}" CornerRadius="4" Padding="{TemplateBinding Padding}">
+                                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                </Border>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="#FFEBEE"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
                                         </Button>
                                     </StackPanel>
                                 </StackPanel>
@@ -321,27 +467,49 @@
                                         <TextBlock Text="👤" FontSize="12" VerticalAlignment="Center" Margin="0,0,6,0"/>
                                         <TextBlock Text="{Binding AssignedUser.Username, FallbackValue='Unassigned'}" FontSize="11" Foreground="#718096" VerticalAlignment="Center"/>
                                         <TextBlock Text="  " Width="20"/> <!-- Spacer -->
-                                        <Button Content="✏️" FontSize="12" Background="Transparent" BorderThickness="0" Padding="4" 
+                                        <Button Content="✏️" FontSize="12" Background="Transparent" BorderThickness="0" Padding="6" 
                                                 Cursor="Hand" VerticalAlignment="Center" HorizontalAlignment="Right"
                                                 Click="EditTicket_Click" Tag="{Binding}" Margin="0,0,4,0">
-                                            <Button.Template>
-                                                <ControlTemplate TargetType="Button">
-                                                    <Border Background="{TemplateBinding Background}" CornerRadius="2">
-                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </Button.Template>
+                                            <Button.Style>
+                                                <Style TargetType="Button">
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="Button">
+                                                                <Border Background="{TemplateBinding Background}" CornerRadius="4" Padding="{TemplateBinding Padding}">
+                                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                </Border>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="#E3F2FD"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
                                         </Button>
-                                        <Button Content="🗑️" FontSize="12" Background="Transparent" BorderThickness="0" Padding="4" 
+                                        <Button Content="🗑️" FontSize="12" Background="Transparent" BorderThickness="0" Padding="6" 
                                                 Cursor="Hand" VerticalAlignment="Center" HorizontalAlignment="Right"
                                                 Click="DeleteTicket_Click" Tag="{Binding}">
-                                            <Button.Template>
-                                                <ControlTemplate TargetType="Button">
-                                                    <Border Background="{TemplateBinding Background}" CornerRadius="2">
-                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </Button.Template>
+                                            <Button.Style>
+                                                <Style TargetType="Button">
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="Button">
+                                                                <Border Background="{TemplateBinding Background}" CornerRadius="4" Padding="{TemplateBinding Padding}">
+                                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                </Border>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="#FFEBEE"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
                                         </Button>
                                     </StackPanel>
                                 </StackPanel>

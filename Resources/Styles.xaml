@@ -142,46 +142,7 @@
 		<Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
 	</Style>
 
-	<!-- Global Header TextBox Style -->
-	<Style x:Key="GlobalHeaderTextBoxStyle" TargetType="TextBox">
-		<Setter Property="Width" Value="200"/>
-		<Setter Property="Margin" Value="0,0,10,0"/>
-		<Setter Property="VerticalAlignment" Value="Center"/>
-		<Setter Property="Padding" Value="8,6"/>
-		<Setter Property="BorderBrush" Value="#DDD"/>
-		<Setter Property="BorderThickness" Value="1"/>
-		<Setter Property="Background" Value="White"/>
-	</Style>
 
-	<!-- Global Header ComboBox Style -->
-	<Style x:Key="GlobalHeaderComboBoxStyle" TargetType="ComboBox">
-		<Setter Property="Width" Value="150"/>
-		<Setter Property="Margin" Value="0,0,10,0"/>
-		<Setter Property="Height" Value="30"/>
-		<Setter Property="VerticalAlignment" Value="Center"/>
-		<Setter Property="BorderBrush" Value="#DDD"/>
-		<Setter Property="BorderThickness" Value="1"/>
-		<Setter Property="Background" Value="White"/>
-	</Style>
-
-	<!-- Global Header Button Style -->
-	<Style x:Key="GlobalHeaderButtonStyle" TargetType="Button">
-		<Setter Property="Foreground" Value="White"/>
-		<Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
-		<Setter Property="BorderThickness" Value="0"/>
-		<Setter Property="FontSize" Value="15"/>
-		<Setter Property="VerticalAlignment" Value="Center"/>
-		<Setter Property="Cursor" Value="Hand"/>
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="Button">
-					<Border Background="{TemplateBinding Background}" CornerRadius="0">
-						<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-					</Border>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
 
 	<Style TargetType="TextBox">
 		<Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
@@ -200,8 +161,11 @@
 		<Setter Property="Padding" Value="5"/>
 		<Setter Property="Margin" Value="5"/>
 	</Style>
-	<!-- Navigation Button Style -->
-	<Style x:Key="NavButtonStyle" TargetType="Button">
+    
+
+
+	<!-- Logout Button Style -->
+	<Style x:Key="LogoutButtonStyle" TargetType="Button">
 		<Setter Property="Foreground" Value="White"/>
 		<Setter Property="Background" Value="Transparent"/>
 		<Setter Property="BorderThickness" Value="0"/>
@@ -213,123 +177,63 @@
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="Button">
-					<!--<Border Background="{TemplateBinding Background}" CornerRadius="4">-->
-						<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-					<!--</Border>
-					<ControlTemplate.Triggers>
-						<Trigger Property="IsMouseOver" Value="True">
-							<Setter Property="Background" Value="#404040"/>
-							<Setter Property="Foreground" Value="White"/>
-						</Trigger>
-						<Trigger Property="IsPressed" Value="True">
-							<Setter Property="Background" Value="#303030"/>
-						</Trigger>
-					</ControlTemplate.Triggers>-->
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
-
-	<!-- Logout Button Style -->
-	<Style x:Key="LogoutButtonStyle" TargetType="Button" BasedOn="{StaticResource NavButtonStyle}">
-		<Setter Property="Foreground" Value="White"/>
-		<Setter Property="Margin" Value="20,0,10,0"/>
-		<Setter Property="FontWeight" Value="Bold"/>
-		<Setter Property="Background" Value="Transparent"/>
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="Button">
 					<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
 	</Style>
 
-	<!-- Avatar Button Style references LogoutButtonStyle -->
-	<Style x:Key="AvatarButtonStyle" TargetType="Button" BasedOn="{StaticResource LogoutButtonStyle}">
-		<Setter Property="Background" Value="Transparent"/>
-		<Setter Property="BorderThickness" Value="0"/>
-		<Setter Property="Cursor" Value="Hand"/>
-		<Setter Property="Padding" Value="5,2"/>
-		<Style.Triggers>
-			<Trigger Property="IsMouseOver" Value="True">
-				<Setter Property="Opacity" Value="0.85"/>
-			</Trigger>
-		</Style.Triggers>
-	</Style>
 
-	<!-- Dropdown Menu Item Style -->
-	<Style x:Key="DropdownMenuItemStyle" TargetType="Button">
-		<Setter Property="Background" Value="Transparent"/>
-		<Setter Property="BorderThickness" Value="0"/>
-		<Setter Property="HorizontalContentAlignment" Value="Left"/>
-		<Setter Property="Cursor" Value="Hand"/>
-		<Setter Property="Padding" Value="8,6"/>
-		<Setter Property="Margin" Value="0,2"/>
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="Button">
-					<Border Background="{TemplateBinding Background}" 
-                            Padding="{TemplateBinding Padding}"
-                            Margin="{TemplateBinding Margin}">
-						<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center"/>
-					</Border>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-		<Style.Triggers>
-			<Trigger Property="IsMouseOver" Value="True">
-				<Setter Property="Background" Value="#F3F4F6"/>
-			</Trigger>
-			<Trigger Property="IsPressed" Value="True">
-				<Setter Property="Background" Value="#E5E7EB"/>
-			</Trigger>
-		</Style.Triggers>
-	</Style>
 
 	<!-- Bottom Navigation Button Style -->
-	<Style x:Key="BottomNavButtonStyle" TargetType="Button">
-		<Setter Property="Foreground" Value="White"/>
-		<Setter Property="Background" Value="Transparent"/>
-		<Setter Property="BorderThickness" Value="0"/>
-		<Setter Property="FontSize" Value="12"/>
-		<Setter Property="Margin" Value="20,0"/>
-		<Setter Property="Cursor" Value="Hand"/>
-		<Setter Property="Padding" Value="15,8"/>
-		<Setter Property="FontWeight" Value="SemiBold"/>
-		<Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="Button">
-					<Border Background="{TemplateBinding Background}" CornerRadius="12" x:Name="ButtonBorder">
-						<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-					</Border>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-		<Style.Triggers>
-			<Trigger Property="IsMouseOver" Value="True">
-				<Setter Property="Foreground" Value="White"/>
-				<Setter Property="Effect">
-					<Setter.Value>
-						<DropShadowEffect BlurRadius="12" Opacity="0.6"/>
-					</Setter.Value>
-				</Setter>
-				<Setter Property="RenderTransform">
-					<Setter.Value>
-						<ScaleTransform ScaleX="1.2" ScaleY="1.2"/>
-					</Setter.Value>
-				</Setter>
-			</Trigger>
-			<Trigger Property="IsPressed" Value="True">
-				<Setter Property="RenderTransform">
-					<Setter.Value>
-						<ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
-					</Setter.Value>
-				</Setter>
-			</Trigger>
-		</Style.Triggers>
-	</Style>
+    <Style x:Key="NavRadioButtonStyle" TargetType="RadioButton">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Margin" Value="20,0"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Padding" Value="15,8"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <Border Background="{TemplateBinding Background}" CornerRadius="12" x:Name="ButtonBorder">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect BlurRadius="12" Opacity="0.6"/>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="RenderTransform">
+                    <Setter.Value>
+                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect BlurRadius="12" Opacity="0.6"/>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="RenderTransform">
+                    <Setter.Value>
+                        <ScaleTransform ScaleX="1.2" ScaleY="1.2"/>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 
     <!-- Pagination Button Style -->
     <Style x:Key="PaginationButtonStyle" TargetType="Button">

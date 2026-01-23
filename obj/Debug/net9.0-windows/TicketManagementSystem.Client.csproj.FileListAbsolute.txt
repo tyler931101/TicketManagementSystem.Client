@@ -29,7 +29,6 @@ E:\work\TicketManagementSystem\TicketManagementSystem.Client\obj\Debug\net9.0-wi
 E:\work\TicketManagementSystem\TicketManagementSystem.Client\obj\Debug\net9.0-windows\Resources\Effect.baml
 E:\work\TicketManagementSystem\TicketManagementSystem.Client\obj\Debug\net9.0-windows\Resources\LightTheme.baml
 E:\work\TicketManagementSystem\TicketManagementSystem.Client\obj\Debug\net9.0-windows\Shared\Controls\Footer.baml
-E:\work\TicketManagementSystem\TicketManagementSystem.Client\obj\Debug\net9.0-windows\Shared\Controls\Header.baml
 E:\work\TicketManagementSystem\TicketManagementSystem.Client\obj\Debug\net9.0-windows\Shared\Dialogs\LoadingDialog.baml
 E:\work\TicketManagementSystem\TicketManagementSystem.Client\obj\Debug\net9.0-windows\Shared\Dialogs\MessageDialog.baml
 E:\work\TicketManagementSystem\TicketManagementSystem.Client\obj\Debug\net9.0-windows\Shared\Dialogs\TicketDialog.baml
@@ -37,12 +36,10 @@ E:\work\TicketManagementSystem\TicketManagementSystem.Client\obj\Debug\net9.0-wi
 E:\work\TicketManagementSystem\TicketManagementSystem.Client\obj\Debug\net9.0-windows\Views\ChartPage.baml
 E:\work\TicketManagementSystem\TicketManagementSystem.Client\obj\Debug\net9.0-windows\Views\ChatPage.baml
 E:\work\TicketManagementSystem\TicketManagementSystem.Client\obj\Debug\net9.0-windows\Views\HelperPage.baml
-E:\work\TicketManagementSystem\TicketManagementSystem.Client\obj\Debug\net9.0-windows\Views\ProfilePage.baml
 E:\work\TicketManagementSystem\TicketManagementSystem.Client\obj\Debug\net9.0-windows\Views\SettingPage.baml
 E:\work\TicketManagementSystem\TicketManagementSystem.Client\obj\Debug\net9.0-windows\Views\VideoPage.baml
 E:\work\TicketManagementSystem\TicketManagementSystem.Client\obj\Debug\net9.0-windows\MainWindow.g.cs
 E:\work\TicketManagementSystem\TicketManagementSystem.Client\obj\Debug\net9.0-windows\Shared\Controls\Footer.g.cs
-E:\work\TicketManagementSystem\TicketManagementSystem.Client\obj\Debug\net9.0-windows\Shared\Controls\Header.g.cs
 E:\work\TicketManagementSystem\TicketManagementSystem.Client\obj\Debug\net9.0-windows\Shared\Dialogs\LoadingDialog.g.cs
 E:\work\TicketManagementSystem\TicketManagementSystem.Client\obj\Debug\net9.0-windows\Shared\Dialogs\MessageDialog.g.cs
 E:\work\TicketManagementSystem\TicketManagementSystem.Client\obj\Debug\net9.0-windows\Shared\Dialogs\TicketDialog.g.cs
@@ -67,6 +64,7 @@ E:\work\TicketManagementSystem\TicketManagementSystem.Client\obj\Debug\net9.0-wi
 E:\work\TicketManagementSystem\TicketManagementSystem.Client\obj\Debug\net9.0-windows\Views\AdminDashboardPage.baml
 E:\work\TicketManagementSystem\TicketManagementSystem.Client\obj\Debug\net9.0-windows\Views\LayoutPage.baml
 E:\work\TicketManagementSystem\TicketManagementSystem.Client\obj\Debug\net9.0-windows\Views\LoginPage.baml
+E:\work\TicketManagementSystem\TicketManagementSystem.Client\obj\Debug\net9.0-windows\Views\ProfilePage.baml
 E:\work\TicketManagementSystem\TicketManagementSystem.Client\obj\Debug\net9.0-windows\Views\RegisterPage.baml
 E:\work\TicketManagementSystem\TicketManagementSystem.Client\obj\Debug\net9.0-windows\Views\TicketManagementPage.baml
 E:\work\TicketManagementSystem\TicketManagementSystem.Client\obj\Debug\net9.0-windows\TicketManagementSystem.Client.g.resources

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -41,12 +41,18 @@ namespace TicketManagementSystem.Client.Shared.Dialogs
             {
                 // Create mode
                 _isEditMode = false;
-                Title = "Create Ticket";
+                DialogTitleText.Text = "Create Ticket";
                 CreateButton.Content = "Create";
             }
             
             // Load users from database (this will set assigned user if in edit mode)
             LoadUsersAsync();
+        }
+
+        private void TitleBar_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == System.Windows.Input.MouseButton.Left)
+                this.DragMove();
         }
 
         private async void LoadUsersAsync()

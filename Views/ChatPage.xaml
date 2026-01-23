@@ -8,11 +8,16 @@
         <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
             <Border Background="{StaticResource CardBrush}"
                     Padding="40"
-                    Effect="{StaticResource DropShadowEffect}">
+                    Width="500"
+                    CornerRadius="10"
+                    BorderThickness="0">
+                <Border.Effect>
+                    <DropShadowEffect Color="Black" BlurRadius="10" ShadowDepth="4" Opacity="0.4"/>
+                </Border.Effect>
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TextBlock Text="💬" FontSize="60" Margin="0,0,0,20" 
                                Foreground="{StaticResource PrimaryBrush}"/>
-                    <TextBlock Text="ChatPage" FontSize="24" FontWeight="Bold" 
+                    <TextBlock Text="ChatPage" FontSize="28" FontWeight="Bold" 
                                HorizontalAlignment="Center" Margin="0,0,0,10"
                                Foreground="{StaticResource TextBrush}"/>
                     <TextBlock Text="Chat features coming soon!" FontSize="16" 

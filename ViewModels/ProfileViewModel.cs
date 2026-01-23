@@ -278,5 +278,34 @@ namespace TicketManagementSystem.Client.ViewModels
                 IsLoading = false;
             }
         }
+
+        [RelayCommand]
+        public void LoadAvatarPreview(string filePath)
+        {
+            if (string.IsNullOrWhiteSpace(filePath))
+            {
+                PreviewAvatarImage = null;
+                AvatarFileName = string.Empty;
+                return;
+            }
+
+            try
+            {
+                var bmp = new BitmapImage();
+                bmp.BeginInit();
+                bmp.CacheOption = BitmapCacheOption.OnLoad;
+                bmp.UriSource = new Uri(filePath);
+                bmp.EndInit();
+                bmp.Freeze();
+                PreviewAvatarImage = bmp;
+                AvatarFileName = Path.GetFileName(filePath);
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = $"Failed to load preview: {ex.Message}";
+                PreviewAvatarImage = null;
+                AvatarFileName = string.Empty;
+            }
+        }
     }
 }

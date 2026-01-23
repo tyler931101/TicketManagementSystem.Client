@@ -12,8 +12,6 @@
             <RowDefinition Height="Auto"/> <!-- Bottom Navigation -->
             <RowDefinition Height="Auto"/> <!-- Footer -->
         </Grid.RowDefinitions>
-        <!-- Header -->
-        <controls:Header Grid.Row="0"/>
         
         <!-- Main Content -->
         <Frame x:Name="ContentFrame" Grid.Row="1" NavigationUIVisibility="Hidden"/>
@@ -24,74 +22,82 @@
                 Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <!-- Tickets -->
-                <Button Style="{StaticResource BottomNavButtonStyle}"
-                        Command="{Binding NavigateTicketsCommand}">
+                <RadioButton Style="{StaticResource NavRadioButtonStyle}"
+                        Command="{Binding NavigateTicketsCommand}"
+                        GroupName="NavButtons"
+                        IsChecked="True">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                         <Image Source="../Resources/PageLinkIcons/ticket.png"
                             Width="50"
                             Height="50"
                             Margin="0,0,0,4"/>
                     </StackPanel>
-                </Button>
+                </RadioButton>
                 
                 <!-- Charts -->
-                <Button Style="{StaticResource BottomNavButtonStyle}"
-                        Command="{Binding NavigateChartsCommand}">
+                <RadioButton Style="{StaticResource NavRadioButtonStyle}"
+                        Command="{Binding NavigateChartsCommand}"
+                        GroupName="NavButtons">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                         <Image Source="../Resources/PageLinkIcons/chart.png"
                             Width="50"
                             Height="50"
                             Margin="0,0,0,4"/>
                     </StackPanel>
-                </Button>
+                </RadioButton>
 
                 <!-- Chat -->
-                <Button Style="{StaticResource BottomNavButtonStyle}"
-                        Command="{Binding NavigateChatCommand}">
+                <RadioButton Style="{StaticResource NavRadioButtonStyle}"
+                        Command="{Binding NavigateChatCommand}"
+                        GroupName="NavButtons">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                         <Image Source="../Resources/PageLinkIcons/chat.png"
                             Width="50"
                             Height="50"
                             Margin="0,0,0,4"/>
                     </StackPanel>
-                </Button>
+                </RadioButton>
 
                 <!-- Setting -->
-                <Button Style="{StaticResource BottomNavButtonStyle}"
-                        Command="{Binding NavigateSettingCommand}">
+                <RadioButton Style="{StaticResource NavRadioButtonStyle}"
+                        Command="{Binding NavigateSettingCommand}"
+                        GroupName="NavButtons">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                         <Image Source="../Resources/PageLinkIcons/settings.png"
                             Width="50"
                             Height="50"
                             Margin="0,0,0,4"/>
                     </StackPanel>
-                </Button>
+                </RadioButton>
 
                 <!-- Helper -->
-                <Button Style="{StaticResource BottomNavButtonStyle}"
-                        Command="{Binding NavigateHelperCommand}">
+                <RadioButton Style="{StaticResource NavRadioButtonStyle}"
+                        Command="{Binding NavigateHelperCommand}"
+                        GroupName="NavButtons">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                         <Image Source="../Resources/PageLinkIcons/helper.png"
                             Width="50"
                             Height="50"
                             Margin="0,0,0,4"/>
                     </StackPanel>
-                </Button>
+                </RadioButton>
 
                 <!-- Calendar -->
-                <Button Style="{StaticResource BottomNavButtonStyle}"
-                        Command="{Binding NavigateCalendarCommand}">
+                <RadioButton Style="{StaticResource NavRadioButtonStyle}"
+                        Command="{Binding NavigateCalendarCommand}"
+                        GroupName="NavButtons">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                         <Image Source="../Resources/PageLinkIcons/calendar.png"
                             Width="50"
                             Height="50"
                             Margin="0,0,0,4"/>
                     </StackPanel>
-                </Button>
+                </RadioButton>
                 
                 <!-- Dashboard (Admin only) -->
-                <Button Style="{StaticResource BottomNavButtonStyle}"
+                <RadioButton Style="{StaticResource NavRadioButtonStyle}"
                         Command="{Binding NavigateDashboardCommand}"
+                        GroupName="NavButtons"
                         Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVisibilityConverter}}">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                         <Image Source="../Resources/PageLinkIcons/user.png"
@@ -99,11 +105,12 @@
                             Height="50"
                             Margin="0,0,0,4"/>
                     </StackPanel>
-                </Button>
+                </RadioButton>
 
                 <!-- Call Videos -->
-                <Button Style="{StaticResource BottomNavButtonStyle}"
+                <RadioButton Style="{StaticResource NavRadioButtonStyle}"
                         Command="{Binding NavigateVideoCommand}"
+                        GroupName="NavButtons"
                         Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVisibilityConverter}}">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                         <Image Source="../Resources/PageLinkIcons/video.png"
@@ -111,6 +118,46 @@
                             Height="50"
                             Margin="0,0,0,4"/>
                     </StackPanel>
+                </RadioButton>
+
+                <!-- profile -->
+                <RadioButton Style="{StaticResource NavRadioButtonStyle}"
+                        Command="{Binding NavigateProfileCommand}"
+                        GroupName="NavButtons"
+                        Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                        <Image Source="../Resources/PageLinkIcons/profile.png"
+                            Width="50"
+                            Height="50"
+                            Margin="0,0,0,4"/>
+                    </StackPanel>
+                </RadioButton>
+
+                <!-- logout -->
+                <Button Command="{Binding LogoutCommand}"
+                        Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVisibilityConverter}}"
+                        Style="{StaticResource LogoutButtonStyle}">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Background="Transparent">
+                                <Image x:Name="LogoutIcon" 
+                                       Source="../Resources/PageLinkIcons/locked.png"
+                                       Width="50"
+                                       Height="50"
+                                       Margin="0,0,0,4"
+                                       RenderTransformOrigin="0.5,0.5">
+                                    <Image.RenderTransform>
+                                        <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                    </Image.RenderTransform>
+                                </Image>
+                            </StackPanel>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="LogoutIcon" Property="Source" Value="../Resources/PageLinkIcons/unlocked.png"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
                 </Button>
             </StackPanel>
         </Border>
