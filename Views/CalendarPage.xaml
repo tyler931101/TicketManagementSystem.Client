@@ -13,17 +13,24 @@
         <Border Grid.Row="0" Style="{StaticResource GlobalHeaderStyle}" BorderBrush="#E0E0E0" BorderThickness="1">
             <StackPanel>
                 <!-- Title Row -->
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                     <Image Source="../Resources/PageLinkIcons/calendar.png"
                             Style="{StaticResource GlobalHeaderIconStyle}"/>
-                    <TextBlock Text="Calendar" Style="{StaticResource GlobalHeaderTitleStyle}"/>
+                    <TextBlock Text="Schedule" Style="{StaticResource GlobalHeaderTitleStyle}"/>
                 </StackPanel>
                 
                 <!-- Calendar Controls Row -->
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="View:" Style="{StaticResource GlobalHeaderLabelStyle}" Width="50"/>
-                    <ComboBox x:Name="ViewComboBox" Style="{StaticResource GlobalHeaderComboBoxStyle}"
-                              Width="120" Margin="0,0,15,0" SelectedIndex="0">
+                    <ComboBox x:Name="ViewComboBox"
+                              Width="120" Margin="0,0,15,0" SelectedIndex="0"
+                              Height="35"
+                              Padding="8,6"
+                              BorderThickness="1"
+                              BorderBrush="#D1D5DB"
+                              Background="White"
+                              FontSize="14"
+                              VerticalAlignment="Center">
                         <ComboBoxItem Content="Month"/>
                         <ComboBoxItem Content="Week"/>
                         <ComboBoxItem Content="Day"/>
@@ -31,12 +38,43 @@
                     </ComboBox>
                     
                     <TextBlock Text="Show:" Style="{StaticResource GlobalHeaderLabelStyle}" VerticalAlignment="Center" Margin="0,0,10,0" Width="50"/>
-                    <CheckBox x:Name="ShowTicketsCheckBox" Content="Tickets" VerticalAlignment="Center" Margin="0,0,15,0" IsChecked="True"/>
-                    <CheckBox x:Name="ShowTasksCheckBox" Content="Tasks" VerticalAlignment="Center" Margin="0,0,15,0" IsChecked="True"/>
+                    <CheckBox x:Name="ShowTicketsCheckBox" Content="Tickets" VerticalAlignment="Center" Margin="0,0,15,0" IsChecked="True" FontSize="14"/>
+                    <CheckBox x:Name="ShowTasksCheckBox" Content="Tasks" VerticalAlignment="Center" Margin="0,0,15,0" IsChecked="True" FontSize="14"/>
                     
                     <Button x:Name="TodayButton" Content="Today" 
-                            Style="{StaticResource GlobalHeaderButtonStyle}"
-                            Width="80" Height="30" Margin="10,0,0,0"/>
+                            Height="35"
+                            FontSize="14"
+                            FontWeight="SemiBold"
+                            Padding="12,0"
+                            Background="{StaticResource PrimaryBrush}"
+                            Foreground="White"
+                            BorderThickness="0"
+                            Cursor="Hand"
+                            Width="80" 
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}"
+                                                    CornerRadius="4"
+                                                    BorderThickness="0"
+                                                    Padding="{TemplateBinding Padding}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#2563EB"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
                 </StackPanel>
             </StackPanel>
         </Border>
@@ -47,8 +85,12 @@
                 <Style TargetType="ScrollBar" BasedOn="{StaticResource ModernScrollBarStyle}"/>
             </ScrollViewer.Resources>
 
-            <Border Background="{StaticResource CardBrush}" Padding="15,12,15,12" Margin="10" BorderBrush="#E0E0E0" 
-                            Effect="{StaticResource DropShadowEffect}">
+            <Border Background="{StaticResource CardBrush}" Padding="15,12,15,12" Margin="10" BorderBrush="#D1D5DB" 
+                    CornerRadius="8"
+                    BorderThickness="1">
+                <Border.Effect>
+                    <DropShadowEffect Color="Black" BlurRadius="10" ShadowDepth="4" Opacity="0.4"/>
+                </Border.Effect>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -69,7 +111,29 @@
                             <Button Grid.Column="0" x:Name="PreviousMonthBtn" 
                                     Background="Transparent" BorderThickness="0"
                                     Padding="8" Margin="0,0,10,0"
-                                    Cursor="Hand">
+                                    Cursor="Hand"
+                                    Width="36" Height="36">
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border Background="{TemplateBinding Background}"
+                                                            CornerRadius="4"
+                                                            BorderThickness="0"
+                                                            Padding="{TemplateBinding Padding}">
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#F3F4F6"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
                                 <TextBlock Text="◀" FontSize="16" Foreground="#6B7280"/>
                             </Button>
                             
@@ -85,7 +149,29 @@
                             <Button Grid.Column="2" x:Name="NextMonthBtn" 
                                     Background="Transparent" BorderThickness="0"
                                     Padding="8" Margin="10,0,0,0"
-                                    Cursor="Hand">
+                                    Cursor="Hand"
+                                    Width="36" Height="36">
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border Background="{TemplateBinding Background}"
+                                                            CornerRadius="4"
+                                                            BorderThickness="0"
+                                                            Padding="{TemplateBinding Padding}">
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#F3F4F6"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
                                 <TextBlock Text="▶" FontSize="16" Foreground="#6B7280"/>
                             </Button>
                         </Grid>

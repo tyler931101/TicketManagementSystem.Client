@@ -34,6 +34,12 @@ namespace TicketManagementSystem.Client.Shared.Dialogs
             }
         }
 
+        private void TitleBar_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == System.Windows.Input.MouseButton.Left)
+                this.DragMove();
+        }
+
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = true;

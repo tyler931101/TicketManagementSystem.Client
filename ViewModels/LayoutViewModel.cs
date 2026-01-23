@@ -63,54 +63,81 @@ namespace TicketManagementSystem.Client.ViewModels
             }
         }
 
+        [ObservableProperty]
+        private string _selectedPage = "Tickets";
+
+        [RelayCommand]
+        private void NavigateToPage(string page)
+        {
+            SelectedPage = page;
+            switch (page)
+            {
+                case "Tickets":
+                    _frame.Navigate(new TicketManagementPage());
+                    break;
+                case "Charts":
+                    _frame.Navigate(new ChartPage());
+                    break;
+                case "Chat":
+                    _frame.Navigate(new ChatPage());
+                    break;
+                case "Setting":
+                    _frame.Navigate(new SettingPage());
+                    break;
+                case "Calendar":
+                    _frame.Navigate(new CalendarPage());
+                    break;
+                case "Helper":
+                    _frame.Navigate(new HelperPage());
+                    break;
+                case "Profile":
+                    _frame.Navigate(new ProfilePage());
+                    break;
+                case "Video":
+                    _frame.Navigate(new VideoPage());
+                    break;
+                case "Dashboard":
+                    if (!IsAdmin)
+                    {
+                        System.Windows.MessageBox.Show("Access denied. Admins only.", "Access Denied",
+                            System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+                        return;
+                    }
+                    _frame.Navigate(new AdminDashboardPage());
+                    break;
+            }
+        }
+
         [RelayCommand]
         private void NavigateLogin() =>
             _frame.Navigate(new LoginPage());
 
         [RelayCommand]
-        private void NavigateTickets() =>
-            _frame.Navigate(new TicketManagementPage());
+        private void NavigateTickets() => NavigateToPage("Tickets");
 
         [RelayCommand]
-        private void NavigateCharts() =>
-            _frame.Navigate(new ChartPage());
+        private void NavigateCharts() => NavigateToPage("Charts");
 
         [RelayCommand]
-        private void NavigateChat() =>
-            _frame.Navigate(new ChatPage());
+        private void NavigateChat() => NavigateToPage("Chat");
 
         [RelayCommand]
-        private void NavigateSetting() =>
-            _frame.Navigate(new SettingPage());
+        private void NavigateSetting() => NavigateToPage("Setting");
 
         [RelayCommand]
-        private void NavigateCalendar() =>
-            _frame.Navigate(new CalendarPage());
+        private void NavigateCalendar() => NavigateToPage("Calendar");
 
         [RelayCommand]
-        private void NavigateHelper() =>
-            _frame.Navigate(new HelperPage());
+        private void NavigateHelper() => NavigateToPage("Helper");
 
         [RelayCommand]
-        private void NavigateProfile() =>
-            _frame.Navigate(new ProfilePage());
+        private void NavigateProfile() => NavigateToPage("Profile");
 
         [RelayCommand]
-        private void NavigateVideo() =>
-            _frame.Navigate(new VideoPage());
+        private void NavigateVideo() => NavigateToPage("Video");
 
         [RelayCommand]
-        private void NavigateDashboard()
-        {
-            if (!IsAdmin)
-            {
-                System.Windows.MessageBox.Show("Access denied. Admins only.", "Access Denied", 
-                    System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
-                return;
-            }
-
-            _frame.Navigate(new AdminDashboardPage());
-        }
+        private void NavigateDashboard() => NavigateToPage("Dashboard");
 
         [RelayCommand]
         private void Logout()

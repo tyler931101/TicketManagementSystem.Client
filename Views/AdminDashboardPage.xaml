@@ -26,7 +26,7 @@
         <Border Grid.Row="0" Style="{StaticResource GlobalHeaderStyle}" BorderBrush="#E0E0E0" BorderThickness="1">
             <StackPanel>
                 <!-- Title Row -->
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                     <Image Source="../Resources/PageLinkIcons/user.png"
                             Style="{StaticResource GlobalHeaderIconStyle}"/>
                     <TextBlock Text="User Management" Style="{StaticResource GlobalHeaderTitleStyle}"/>
@@ -42,13 +42,53 @@
                     <!-- Search -->
                     <StackPanel Grid.Column="0" Orientation="Horizontal">
                         <TextBlock Text="Search:" Style="{StaticResource GlobalHeaderLabelStyle}" Width="60"/>
-                        <TextBox x:Name="SearchBox" Style="{StaticResource GlobalHeaderTextBoxStyle}"
+                        <TextBox x:Name="SearchBox"
                                 Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" 
-                                Tag="Search users..."/>
+                                Tag="Search users..."
+                                Height="35"
+                                Padding="8,6"
+                                BorderThickness="1"
+                                BorderBrush="#D1D5DB"
+                                Background="White"
+                                FontSize="14"
+                                Width="200"
+                                Margin="0,0,10,0"
+                                VerticalAlignment="Center"/>
 
                         <Button Content="Reset Filters" Command="{Binding ClearFiltersCommand}"
-                                Style="{StaticResource GlobalHeaderButtonStyle}"
-                                Width="100" Height="30" Margin="10,0,0,0"/>
+                                Height="35"
+                                FontSize="14"
+                                FontWeight="SemiBold"
+                                Padding="12,0"
+                                Background="{StaticResource PrimaryBrush}"
+                                Foreground="White"
+                                BorderThickness="0"
+                                Cursor="Hand"
+                                Width="100" 
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Center">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}"
+                                                        CornerRadius="4"
+                                                        BorderThickness="0"
+                                                        Padding="{TemplateBinding Padding}">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#2563EB"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
                     </StackPanel>
                 </Grid>
             </StackPanel>
@@ -60,8 +100,12 @@
                 <Style TargetType="ScrollBar" BasedOn="{StaticResource ModernScrollBarStyle}"/>
             </ScrollViewer.Resources>
 
-            <Border Background="{StaticResource CardBrush}" Padding="15,12,15,12" Margin="10" BorderBrush="#E0E0E0" 
-                            Effect="{StaticResource DropShadowEffect}">
+            <Border Background="{StaticResource CardBrush}" Padding="15,12,15,12" Margin="10" BorderBrush="#D1D5DB" 
+                    CornerRadius="8"
+                    BorderThickness="1">
+                <Border.Effect>
+                    <DropShadowEffect Color="Black" BlurRadius="10" ShadowDepth="4" Opacity="0.4"/>
+                </Border.Effect>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -263,7 +307,12 @@
                     <StackPanel Grid.Column="2" Orientation="Horizontal">
                         <TextBlock Text="Rows:" VerticalAlignment="Center" Margin="0,0,10,0" Foreground="#6C757D"/>
                         <ComboBox x:Name="PageSizeComboBox" Width="80" Margin="0,0,15,0"
-                                  Style="{StaticResource GlobalHeaderComboBoxStyle}"
+                                  Height="35"
+                                  Padding="8,6"
+                                  BorderThickness="1"
+                                  BorderBrush="#D1D5DB"
+                                  Background="White"
+                                  FontSize="14"
                                   SelectedValue="{Binding PageSize, Mode=TwoWay}" SelectedValuePath="Tag">
                             <ComboBoxItem Tag="5" Content="5"/>
                             <ComboBoxItem Tag="10" Content="10"/>
