@@ -23,6 +23,7 @@ namespace TicketManagementSystem.Client.Services
             {
                 var response = await _httpClient.PostAsJsonAsync($"{BaseUrl}/auth/login", loginRequest);
                 var result = await response.Content.ReadFromJsonAsync<ApiResponse<AuthResponse>>();
+                if (result != null) result.StatusCode = (int)response.StatusCode;
                 
                 if (result != null && result.Success && result.Data != null)
                 {
@@ -50,6 +51,7 @@ namespace TicketManagementSystem.Client.Services
             {
                 var response = await _httpClient.PostAsJsonAsync($"{BaseUrl}/auth/register", registerRequest);
                 var result = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
+                if (result != null) result.StatusCode = (int)response.StatusCode;
                 return result ?? ApiResponse<object>.ErrorResult("Registration failed");
             }
             catch (Exception ex)

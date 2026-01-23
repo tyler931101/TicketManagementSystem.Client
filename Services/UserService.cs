@@ -2,6 +2,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Collections.Generic;
 using System;
+using System.IO;
 using TicketManagementSystem.Client.DTOs.Users;
 using TicketManagementSystem.Client.DTOs.Common;
 using TicketManagementSystem.Client.Models;
@@ -28,7 +29,7 @@ namespace TicketManagementSystem.Client.Services
         {
             if (!string.IsNullOrEmpty(AuthenticationService.CurrentToken))
             {
-                _httpClient.DefaultRequestHeaders.Authorization = 
+                _httpClient.DefaultRequestHeaders.Authorization =
                     new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AuthenticationService.CurrentToken);
             }
             else
@@ -41,7 +42,6 @@ namespace TicketManagementSystem.Client.Services
         {
             try
             {
-                PrepareRequest();
                 // Create cache key
                 var cacheKey = $"users_{request.PageNumber}_{request.PageSize}_{request.SearchTerm}";
                 
@@ -69,6 +69,7 @@ namespace TicketManagementSystem.Client.Services
                 var url = $"{BaseUrl}/users?{queryString}";
 
                 var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+                PrepareRequest();
                 var response = await _httpClient.GetAsync(url);
                 stopwatch.Stop();
                 
@@ -78,10 +79,13 @@ namespace TicketManagementSystem.Client.Services
                 {
                     var errorContent = await response.Content.ReadAsStringAsync();
                     Console.WriteLine($"API Error Content: {errorContent}");
-                    return ApiResponse<PagedResponseDto<User>>.ErrorResult($"Server returned {response.StatusCode}: {errorContent}");
+                    var err = ApiResponse<PagedResponseDto<User>>.ErrorResult($"Server returned {response.StatusCode}: {errorContent}");
+                    err.StatusCode = (int)response.StatusCode;
+                    return err;
                 }
                 
                 var result = await response.Content.ReadFromJsonAsync<ApiResponse<PagedResponseDto<User>>>();
+                if (result != null) result.StatusCode = (int)response.StatusCode;
                 
                 if (result == null)
                 {
@@ -128,6 +132,122 @@ namespace TicketManagementSystem.Client.Services
             }
         }
 
+        public async Task<ApiResponse<UserDto>> GetMeAsync()
+        {
+            try
+            {
+                PrepareRequest();
+                var response = await _httpClient.GetAsync($"{BaseUrl}/users/me");
+                if (!response.IsSuccessStatusCode)
+                {
+                    var err = ApiResponse<UserDto>.ErrorResult($"Server returned {response.StatusCode}");
+                    err.StatusCode = (int)response.StatusCode;
+                    return err;
+                }
+                var result = await response.Content.ReadFromJsonAsync<ApiResponse<UserDto>>();
+                if (result != null) result.StatusCode = (int)response.StatusCode;
+                return result ?? ApiResponse<UserDto>.ErrorResult("Failed to deserialize server response");
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<UserDto>.ErrorResult("Connection error", new List<string> { ex.Message });
+            }
+        }
+
+        public async Task<ApiResponse<object>> UpdateMeAsync(UpdateUserDto request)
+        {
+            try
+            {
+                PrepareRequest();
+                var response = await _httpClient.PutAsJsonAsync($"{BaseUrl}/users/me", request);
+                if (response.IsSuccessStatusCode)
+                {
+                    var ok = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
+                    if (ok != null) ok.StatusCode = (int)response.StatusCode;
+                    return ok ?? ApiResponse<object>.SuccessResult(new { }, "Profile updated successfully");
+                }
+                var errorContent = await response.Content.ReadAsStringAsync();
+                var err = ApiResponse<object>.ErrorResult($"Update failed: {response.StatusCode}", new List<string> { errorContent });
+                err.StatusCode = (int)response.StatusCode;
+                return err;
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<object>.ErrorResult("Connection error", new List<string> { ex.Message });
+            }
+        }
+
+        public async Task<ApiResponse<object>> ChangeMyPasswordAsync(ChangePasswordDto request)
+        {
+            try
+            {
+                PrepareRequest();
+                var response = await _httpClient.PostAsJsonAsync($"{BaseUrl}/users/me/change-password", request);
+                if (response.IsSuccessStatusCode)
+                {
+                    var ok = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
+                    if (ok != null) ok.StatusCode = (int)response.StatusCode;
+                    return ok ?? ApiResponse<object>.SuccessResult(new { }, "Password changed successfully");
+                }
+                var errorContent = await response.Content.ReadAsStringAsync();
+                var err = ApiResponse<object>.ErrorResult($"Change password failed: {response.StatusCode}", new List<string> { errorContent });
+                err.StatusCode = (int)response.StatusCode;
+                return err;
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<object>.ErrorResult("Connection error", new List<string> { ex.Message });
+            }
+        }
+
+        public async Task<ApiResponse<byte[]>> GetAvatarAsync(string userId)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"{BaseUrl}/users/{userId}/avatar");
+                if (!response.IsSuccessStatusCode)
+                {
+                    var err = ApiResponse<byte[]>.ErrorResult($"Server returned {response.StatusCode}");
+                    err.StatusCode = (int)response.StatusCode;
+                    return err;
+                }
+                var bytes = await response.Content.ReadAsByteArrayAsync();
+                var ok = ApiResponse<byte[]>.SuccessResult(bytes, "Avatar retrieved successfully");
+                ok.StatusCode = (int)response.StatusCode;
+                return ok;
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<byte[]>.ErrorResult("Connection error", new List<string> { ex.Message });
+            }
+        }
+
+        public async Task<ApiResponse<object>> UploadMyAvatarAsync(Stream fileStream, string fileName, string contentType = "application/octet-stream")
+        {
+            try
+            {
+                PrepareRequest();
+                using var content = new MultipartFormDataContent();
+                var streamContent = new StreamContent(fileStream);
+                streamContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(contentType);
+                content.Add(streamContent, "file", fileName);
+                var response = await _httpClient.PostAsync($"{BaseUrl}/users/me/avatar", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    var ok = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
+                    if (ok != null) ok.StatusCode = (int)response.StatusCode;
+                    return ok ?? ApiResponse<object>.SuccessResult(new { }, "Avatar uploaded successfully");
+                }
+                var errorContent = await response.Content.ReadAsStringAsync();
+                var err = ApiResponse<object>.ErrorResult($"Upload avatar failed: {response.StatusCode}", new List<string> { errorContent });
+                err.StatusCode = (int)response.StatusCode;
+                return err;
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<object>.ErrorResult("Connection error", new List<string> { ex.Message });
+            }
+        }
         public async Task<ApiResponse<List<TicketUserDto>>> GetTicketUsersAsync()
         {
             try
@@ -141,10 +261,13 @@ namespace TicketManagementSystem.Client.Services
                 {
                     var errorContent = await response.Content.ReadAsStringAsync();
                     Console.WriteLine($"API Error Content: {errorContent}");
-                    return ApiResponse<List<TicketUserDto>>.ErrorResult($"Server returned {response.StatusCode}: {errorContent}");
+                    var err = ApiResponse<List<TicketUserDto>>.ErrorResult($"Server returned {response.StatusCode}: {errorContent}");
+                    err.StatusCode = (int)response.StatusCode;
+                    return err;
                 }
                 
                 var result = await response.Content.ReadFromJsonAsync<ApiResponse<List<TicketUserDto>>>();
+                if (result != null) result.StatusCode = (int)response.StatusCode;
                 
                 if (result == null)
                 {
@@ -182,10 +305,13 @@ namespace TicketManagementSystem.Client.Services
                 {
                     var errorContent = await response.Content.ReadAsStringAsync();
                     Console.WriteLine($"API Error Content: {errorContent}");
-                    return ApiResponse<bool>.ErrorResult($"Server returned {response.StatusCode}: {errorContent}");
+                    var err = ApiResponse<bool>.ErrorResult($"Server returned {response.StatusCode}: {errorContent}");
+                    err.StatusCode = (int)response.StatusCode;
+                    return err;
                 }
                 
                 var result = await response.Content.ReadFromJsonAsync<ApiResponse<bool>>();
+                if (result != null) result.StatusCode = (int)response.StatusCode;
                 
                 if (result == null)
                 {

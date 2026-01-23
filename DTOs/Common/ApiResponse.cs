@@ -21,6 +21,9 @@ namespace TicketManagementSystem.Client.DTOs.Common
         [JsonPropertyName("timestamp")]
         public DateTime Timestamp { get; set; } = DateTime.Now;
 
+        [JsonPropertyName("statusCode")]
+        public int StatusCode { get; set; }
+
         public static ApiResponse<T> SuccessResult(T data, string message = "Operation successful")
         {
             return new ApiResponse<T>
@@ -76,5 +79,6 @@ namespace TicketManagementSystem.Client.DTOs.Common
         public string Message { get; set; } = "Validation failed";
         public Dictionary<string, List<string>> Errors { get; set; } = new();
         public DateTime Timestamp { get; set; } = DateTime.Now;
+        public int StatusCode { get; set; }
     }
 }

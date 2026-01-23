@@ -12,7 +12,7 @@ TRACE;DEBUG;NET;NET9_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR
 E:\work\TicketManagementSystem\TicketManagementSystem.Client\App.xaml
 22-72425360
 
-40-1066536705
+42-491887815
 214-1998455309
 MainWindow.xaml;Resources\DarkTheme.xaml;Resources\Effect.xaml;Resources\LightTheme.xaml;Resources\Styles.xaml;Shared\Controls\Footer.xaml;Shared\Controls\Header.xaml;Shared\Dialogs\LoadingDialog.xaml;Shared\Dialogs\MessageDialog.xaml;Shared\Dialogs\TicketDialog.xaml;Views\AdminDashboardPage.xaml;Views\CalendarPage.xaml;Views\ChartPage.xaml;Views\ChatPage.xaml;Views\HelperPage.xaml;Views\LayoutPage.xaml;Views\LoginPage.xaml;Views\ProfilePage.xaml;Views\RegisterPage.xaml;Views\SettingPage.xaml;Views\TicketManagementPage.xaml;Views\VideoPage.xaml;
 

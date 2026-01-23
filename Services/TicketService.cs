@@ -36,6 +36,7 @@ namespace TicketManagementSystem.Client.Services
                 PrepareRequest();
                 var response = await _httpClient.GetAsync($"{BaseUrl}/tickets");
                 var result = await response.Content.ReadFromJsonAsync<ApiResponse<List<TicketDto>>>();
+                if (result != null) result.StatusCode = (int)response.StatusCode;
                 return result ?? ApiResponse<List<TicketDto>>.ErrorResult("Failed to fetch tickets");
             }
             catch (Exception ex)
@@ -51,6 +52,7 @@ namespace TicketManagementSystem.Client.Services
                 PrepareRequest();
                 var response = await _httpClient.GetAsync($"{BaseUrl}/tickets/user/{username}");
                 var result = await response.Content.ReadFromJsonAsync<ApiResponse<List<TicketDto>>>();
+                if (result != null) result.StatusCode = (int)response.StatusCode;
                 return result ?? ApiResponse<List<TicketDto>>.ErrorResult("Failed to fetch user tickets");
             }
             catch (Exception ex)
@@ -102,15 +104,19 @@ namespace TicketManagementSystem.Client.Services
                     // Server returns a simple success message, not a TicketDto
                     var content = await response.Content.ReadAsStringAsync();
                     Console.WriteLine($"Update successful: {content}");
-                    return ApiResponse<TicketDto>.SuccessResult(new TicketDto());
+                    var ok = ApiResponse<TicketDto>.SuccessResult(new TicketDto());
+                    ok.StatusCode = (int)response.StatusCode;
+                    return ok;
                 }
                 else
                 {
                     // Try to get error details from response
                     var errorContent = await response.Content.ReadAsStringAsync();
                     Console.WriteLine($"Update failed with status {response.StatusCode}. Content: {errorContent}");
-                    return ApiResponse<TicketDto>.ErrorResult($"Update failed: {response.StatusCode}", 
+                    var err = ApiResponse<TicketDto>.ErrorResult($"Update failed: {response.StatusCode}", 
                         new List<string> { errorContent });
+                    err.StatusCode = (int)response.StatusCode;
+                    return err;
                 }
             }
             catch (Exception ex)
@@ -136,15 +142,19 @@ namespace TicketManagementSystem.Client.Services
                     // Server returns a simple success message
                     var content = await response.Content.ReadAsStringAsync();
                     Console.WriteLine($"Delete successful: {content}");
-                    return ApiResponse<object>.SuccessResult(new { }, "Ticket deleted successfully");
+                    var ok = ApiResponse<object>.SuccessResult(new { }, "Ticket deleted successfully");
+                    ok.StatusCode = (int)response.StatusCode;
+                    return ok;
                 }
                 else
                 {
                     // Try to get error details from response
                     var errorContent = await response.Content.ReadAsStringAsync();
                     Console.WriteLine($"Delete failed with status {response.StatusCode}. Content: {errorContent}");
-                    return ApiResponse<object>.ErrorResult($"Delete failed: {response.StatusCode}", 
+                    var err = ApiResponse<object>.ErrorResult($"Delete failed: {response.StatusCode}", 
                         new List<string> { errorContent });
+                    err.StatusCode = (int)response.StatusCode;
+                    return err;
                 }
             }
             catch (Exception ex)

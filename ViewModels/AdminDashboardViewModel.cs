@@ -85,6 +85,9 @@ namespace TicketManagementSystem.Client.ViewModels
         [ObservableProperty]
         private bool _showLastPageButton = false;
         
+        [ObservableProperty]
+        private bool _requiresLogin = false;
+        
         public async Task LoadUsersAsync()
         {
             System.Diagnostics.Debug.WriteLine($"LoadUsersAsync called - CurrentPage: {CurrentPage}, PageSize: {PageSize}, SearchTerm: '{SearchText}'");
@@ -157,6 +160,11 @@ namespace TicketManagementSystem.Client.ViewModels
                 else
                 {
                     // Handle error
+                    if (response != null && response.StatusCode == 401)
+                    {
+                        AuthenticationService.Logout();
+                        RequiresLogin = true;
+                    }
                     ResetPaginationInfo();
                 }
             }
